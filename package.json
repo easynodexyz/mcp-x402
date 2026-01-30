@@ -1,6 +1,6 @@
 {
   "name": "@easynodexyz/mcp-x402",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "MCP server for AI agents to purchase VPS/Node products via Easy Node's x402 API with USDC on Base",
   "type": "module",
   "main": "./dist/index.js",
