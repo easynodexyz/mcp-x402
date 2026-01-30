@@ -1,0 +1,42 @@
+---
+title: "Claude Code"
+description: "Configure MCP x402 with Claude Code CLI"
+---
+
+# Claude Code (CLI)
+
+## Quick Setup
+
+```bash
+claude /mcp add @easynodexyz/mcp-x402 -- npx @easynodexyz/mcp-x402
+```
+
+## Manual Setup
+
+Add to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "mcpServers": {
+    "easy-node": {
+      "command": "npx",
+      "args": ["@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+## Config File Locations
+
+| OS | Path |
+|----|------|
+| macOS/Linux | `~/.claude/settings.json` |
+| Windows | `%USERPROFILE%\.claude\settings.json` |
+
+## Plugin Install
+
+You can also install as a Claude Code plugin:
+
+```bash
+/plugin add easynodexyz/mcp-x402
+```

@@ -1,0 +1,31 @@
+---
+title: "Cursor"
+description: "Configure MCP x402 with Cursor IDE"
+---
+
+# Cursor
+
+Add to your Cursor MCP settings (`.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "@easynodexyz/mcp-x402": {
+      "command": "npx",
+      "args": ["@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+## Config File Locations
+
+| Scope | Path |
+|-------|------|
+| Project | `.cursor/mcp.json` in project root |
+| Global (macOS) | `~/.cursor/mcp.json` |
+| Global (Windows) | `%USERPROFILE%\.cursor\mcp.json` |
+
+## After Configuration
+
+Restart Cursor to load the MCP server.

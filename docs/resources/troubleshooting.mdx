@@ -1,0 +1,57 @@
+---
+title: "Troubleshooting"
+description: "Common issues and solutions"
+---
+
+# Troubleshooting
+
+## "EASYNODE_PRIVATE_KEY is required"
+
+The server cannot find your wallet private key.
+
+**Solutions:**
+- Run `npx @easynodexyz/mcp-x402 setup` to configure interactively
+- Set the `EASYNODE_PRIVATE_KEY` environment variable in your IDE config
+- Create `~/.easy-node/.env` with `EASYNODE_PRIVATE_KEY=0x...`
+
+## "Payment amount exceeds maximum"
+
+The product price exceeds your configured max payment limit.
+
+**Solution:** Increase `EASYNODE_MAX_PAYMENT` in your config:
+
+```bash
+# In ~/.easy-node/.env
+EASYNODE_MAX_PAYMENT=500
+```
+
+## "402 response missing payment-required header"
+
+The API endpoint may not support x402 payments.
+
+**Solutions:**
+- Check you're using the correct API URL (`https://api.easy-node.xyz`)
+- Verify the product supports x402 payment
+- Check if the API is experiencing issues
+
+## MCP Server Not Appearing in IDE
+
+1. **Verify config file location** — Ensure the config is in the correct path for your OS
+2. **Check JSON syntax** — Use a JSON validator to ensure the config is valid
+3. **Restart completely** — Close and reopen the IDE (not just reload)
+4. **Check logs** — Look for MCP connection errors in IDE developer logs
+
+## "Invalid private key format"
+
+The private key must be:
+- Prefixed with `0x`
+- Followed by exactly 64 hexadecimal characters
+
+Example: `0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef`
+
+## Connection Timeout
+
+If the MCP server times out connecting:
+- Check your internet connection
+- Verify `EASYNODE_API_URL` is correct
+- The API server may be temporarily unavailable

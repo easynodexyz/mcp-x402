@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Lock files
+package-lock.json
+
+# Build outputs
+dist
+build
+out
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# IDE
+.vscode
+.idea
+
+# Changesets
+.changeset/*.md
+
+# Documentation
+docs

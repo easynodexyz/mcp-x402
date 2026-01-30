@@ -1,0 +1,48 @@
+# Logs
+
+logs
+_.log
+
+# Caches
+
+.cache
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# Runtime data
+
+pids
+_.pid
+_.seed
+*.pid.lock
+
+# Dependency directories
+
+node_modules/
+
+# Output of 'npm pack'
+
+*.tgz
+
+
+# dotenv environment variable files
+
+.env
+.env.*
+
+# IntelliJ based IDEs
+.idea
+
+.cursor
+.opencode
+.claude
+CLAUDE.md
+AGENT.md
+
+# Finder (MacOS) folder config
+.DS_Store
+package-lock.json
+
+prompt.txt

@@ -1,0 +1,13 @@
+{
+  "name": "mcp-x402",
+  "displayName": "Easy Node x402",
+  "description": "AI agent tools for purchasing and managing VPS/blockchain nodes with USDC payments on Base",
+  "plugins": [
+    {
+      "name": "Easy Node x402",
+      "path": ".",
+      "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
+      "keywords": ["mcp", "x402", "vps", "blockchain", "usdc", "base", "payments"]
+    }
+  ]
+}

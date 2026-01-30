@@ -1,0 +1,31 @@
+---
+title: "Claude Desktop"
+description: "Configure MCP x402 with Claude Desktop"
+---
+
+# Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "@easynodexyz/mcp-x402": {
+      "command": "npx",
+      "args": ["@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+## Config File Locations
+
+| OS | Path |
+|----|------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+| Linux | `~/.config/Claude/claude_desktop_config.json` |
+
+## After Configuration
+
+Restart Claude Desktop completely to load the MCP server.

@@ -1,0 +1,34 @@
+{
+  "name": "io.github.easynodexyz/mcp-x402",
+  "title": "Easy Node x402",
+  "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
+  "version": "0.1.0",
+  "website": "https://easy-node.xyz",
+  "repository": "https://github.com/easynodexyz/mcp-x402",
+  "packages": [
+    {
+      "type": "npm",
+      "name": "@easynodexyz/mcp-x402",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "environment": {
+        "EASYNODE_PRIVATE_KEY": {
+          "type": "string",
+          "description": "Wallet private key (0x...)",
+          "secret": true,
+          "required": true
+        },
+        "EASYNODE_API_URL": {
+          "type": "string",
+          "description": "API base URL",
+          "default": "https://api.easy-node.xyz"
+        },
+        "EASYNODE_MAX_PAYMENT": {
+          "type": "string",
+          "description": "Max USDC per transaction",
+          "default": "100"
+        }
+      }
+    }
+  ]
+}

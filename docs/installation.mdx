@@ -1,0 +1,45 @@
+---
+title: "Installation"
+description: "Install and configure the Easy Node MCP x402 server"
+---
+
+# Installation
+
+## Interactive Setup (Recommended)
+
+```bash
+npx @easynodexyz/mcp-x402 setup
+```
+
+This wizard will:
+1. Prompt for your wallet private key
+2. Save configuration to `~/.easy-node/.env`
+3. Output the IDE config to copy
+
+## Manual Setup
+
+### Option A: Environment variables in IDE config
+
+```json
+{
+  "mcpServers": {
+    "mcp-x402": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"],
+      "env": {
+        "EASYNODE_PRIVATE_KEY": "0x..."
+      }
+    }
+  }
+}
+```
+
+### Option B: Config file
+
+Create `~/.easy-node/.env`:
+
+```
+EASYNODE_PRIVATE_KEY=0x...
+EASYNODE_API_URL=https://api.easy-node.xyz
+EASYNODE_MAX_PAYMENT=1000
+```

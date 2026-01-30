@@ -1,0 +1,28 @@
+---
+title: "VS Code + Continue"
+description: "Configure MCP x402 with VS Code and Continue extension"
+---
+
+# VS Code + Continue
+
+Add to your Continue configuration (`~/.continue/config.json`):
+
+```json
+{
+  "experimental": {
+    "modelContextProtocolServers": [
+      {
+        "transport": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["@easynodexyz/mcp-x402"]
+        }
+      }
+    ]
+  }
+}
+```
+
+## After Configuration
+
+Restart VS Code to load the MCP server through Continue.

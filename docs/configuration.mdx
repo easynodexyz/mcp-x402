@@ -1,0 +1,33 @@
+---
+title: "Configuration"
+description: "Environment variables and configuration options"
+---
+
+# Configuration
+
+## Environment Variables
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `EASYNODE_PRIVATE_KEY` | Yes | - | Wallet private key (0x...) |
+| `EASYNODE_API_URL` | No | `https://api.easy-node.xyz` | API base URL |
+| `EASYNODE_MAX_PAYMENT` | No | `100` | Max USDC per transaction |
+
+## Config Resolution Order
+
+Configuration is loaded from multiple sources. Later sources override earlier ones:
+
+1. `~/.easy-node/.env` — Global config (lowest priority)
+2. `./.env` — Project-level config
+3. Environment variables — Highest priority
+
+## Private Key Format
+
+The private key must be a valid Ethereum private key:
+- Starts with `0x`
+- Followed by 64 hexadecimal characters
+- Example: `0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef`
+
+## Max Payment Protection
+
+The `EASYNODE_MAX_PAYMENT` setting caps the maximum USDC amount per transaction. If a product costs more than this limit, the purchase will be rejected with an error message. Increase this value if you need to purchase higher-priced products.

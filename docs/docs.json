@@ -1,0 +1,72 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Easy Node MCP x402",
+  "description": "MCP server for AI agents to purchase VPS and blockchain nodes with USDC",
+  "theme": "mint",
+  "colors": {
+    "primary": "#6366F1",
+    "light": "#EEF2FF",
+    "dark": "#312E81"
+  },
+  "logo": {
+    "light": "/public/logo/logo.svg",
+    "dark": "/public/logo/logo-dark.svg"
+  },
+  "favicon": "/public/favicon.ico",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["overview", "installation", "configuration"]
+          },
+          {
+            "group": "IDE Clients",
+            "pages": [
+              "clients/claude-desktop",
+              "clients/claude-code",
+              "clients/cursor",
+              "clients/vscode-continue"
+            ]
+          },
+          {
+            "group": "MCP Tools",
+            "pages": [
+              "tools/list-products",
+              "tools/create-order",
+              "tools/get-order",
+              "tools/list-instances",
+              "tools/get-instance",
+              "tools/renew-instance",
+              "tools/update-custom-name"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": ["guides/x402-protocol", "guides/security"]
+          },
+          {
+            "group": "Resources",
+            "pages": ["resources/troubleshooting"]
+          }
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "x": "https://x.com/easynodexyz",
+    "github": "https://github.com/easynodexyz/mcp-x402"
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/easynodexyz/mcp-x402"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://easy-node.xyz"
+  }
+}

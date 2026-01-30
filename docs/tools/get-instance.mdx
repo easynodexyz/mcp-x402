@@ -1,0 +1,50 @@
+---
+title: "get_instance"
+description: "Get instance details including connection credentials"
+---
+
+# get_instance
+
+Get detailed information about a specific instance including connection details (IP address, SSH port, admin credentials). Secrets are encrypted and decrypted locally.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `instanceId` | `string` | Yes | Instance ID (userNode or userVps ID) |
+| `type` | `string` | Yes | Instance type: `"node"` or `"vps"` |
+
+## Example Usage
+
+```
+Get connection details for VPS instance inst_456
+```
+
+## Example Response
+
+```markdown
+## Instance Details
+
+**ID:** inst_456
+**Type:** vps
+**Product:** vps-xs
+**Custom Name:** my-server
+**Status:** ✅ active
+**Renewable:** ✅ Yes
+**Start Date:** Wed, 15 Jan 2025 00:00:00 GMT
+**End Date:** Tue, 15 Apr 2025 00:00:00 GMT
+
+### Connection Details
+
+**IPv4 Address:** 203.0.113.42
+**SSH Port:** 22
+
+### Admin Credentials
+
+**Username:** root
+**Password:** s3cur3p4ss
+
+\`\`\`bash
+ssh root@203.0.113.42 -p 22
+\`\`\`
+```

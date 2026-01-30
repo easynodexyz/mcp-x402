@@ -1,0 +1,40 @@
+---
+title: "list_products"
+description: "List available VPS and blockchain node products"
+---
+
+# list_products
+
+List available VPS and blockchain node products with USDC pricing. Returns product IDs, names, pricing, and availability.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `category` | `string` | No | Filter by product category: `"vps"` or `"node"` |
+
+## Example Usage
+
+```
+List all VPS products available for purchase
+```
+
+```
+Show me available blockchain node products
+```
+
+## Example Response
+
+```markdown
+## Available VPS Products (3)
+
+**VPS-XS** (vps-xs)
+  ID: abc123
+  Title: Extra Small VPS
+  Description: 1 vCPU, 1GB RAM, 25GB SSD
+  Type: vps
+  Pricing (USDC):
+    - Description: 1 month, Period (in month): 1, Total period cost: $5, Cost for 1 month: $5
+  Remaining Supply: 50
+  Specs: vcpu: 1, ram: 1024, storage: 25600
+```

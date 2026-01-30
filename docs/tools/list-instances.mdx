@@ -1,0 +1,46 @@
+---
+title: "list_instances"
+description: "List all instances owned by the wallet"
+---
+
+# list_instances
+
+List all VPS and Node instances owned by the wallet. Returns instance IDs, types, statuses, and subscription dates.
+
+## Parameters
+
+This tool takes no parameters.
+
+## Example Usage
+
+```
+List all my instances
+```
+
+```
+Show my running VPS and node instances
+```
+
+## Example Response
+
+```markdown
+## Instances for 0x1234...abcd
+
+Found 2 instance(s):
+
+### VPS: vps-xs (my-server)
+- **ID:** inst_456
+- **Status:** ✅ active
+- **Renewable:** ✅ Yes
+- **Start:** 1/15/2025
+- **End:** 4/15/2025
+
+### NODE: eigenlayer
+- **ID:** inst_789
+- **Status:** ✅ active
+- **Renewable:** ✅ Yes
+- **Start:** 1/10/2025
+- **End:** 2/10/2025
+
+> Use `get_instance` with an instance ID to get connection details (IP, credentials).
+```

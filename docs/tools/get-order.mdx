@@ -1,0 +1,41 @@
+---
+title: "get_order"
+description: "Check the status of an existing order"
+---
+
+# get_order
+
+Get the status and details of an existing order by ID. Returns order status, products, and payment information.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `orderId` | `string` | Yes | Order ID to look up |
+
+## Example Usage
+
+```
+Check status of order order_xyz789
+```
+
+## Example Response
+
+```markdown
+## Order Details
+
+**Order ID:** order_xyz789
+**Status:** ✅ completed
+**User:** 0x1234...abcd
+**Created:** 2025-01-15T10:30:00.000Z
+
+### Products:
+- Product: abc123
+  Period: 3 month(s)
+  Quantity: 1
+
+### Instance:
+- ID: inst_456
+- Type: vps
+- Status: ✅ active
+```

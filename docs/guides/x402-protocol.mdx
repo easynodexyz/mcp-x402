@@ -1,0 +1,76 @@
+---
+title: "x402 Protocol"
+description: "How the x402 payment protocol works"
+---
+
+# x402 Payment Protocol
+
+The [x402 protocol](https://www.x402.org/) enables seamless machine-to-machine payments using HTTP status codes. It extends HTTP with a payment flow based on the `402 Payment Required` status code.
+
+## How It Works
+
+The payment flow is fully automated by the MCP server:
+
+<Steps>
+  <Step title="Agent calls create_order">
+    The AI agent calls `create_order` or `renew_instance` with product details.
+  </Step>
+  <Step title="Server returns HTTP 402">
+    The first request returns HTTP 402 with a `payment-required` header containing payment requirements (amount, recipient, asset, network).
+  </Step>
+  <Step title="Client signs payment">
+    The MCP client signs a USDC transfer authorization using EIP-3009 (TransferWithAuthorization) — no on-chain transaction needed at this point.
+  </Step>
+  <Step title="Retry with signature">
+    The request is retried with the payment signature in the `payment-signature` header.
+  </Step>
+  <Step title="Server verifies and settles">
+    The server verifies the signature, settles the USDC transfer on-chain (Base network), and creates the order.
+  </Step>
+  <Step title="Order returned">
+    The completed order is returned to the agent with instance details.
+  </Step>
+</Steps>
+
+## EIP-3009: TransferWithAuthorization
+
+The payment uses [EIP-3009](https://eips.ethereum.org/EIPS/eip-3009) which allows gasless USDC transfers via signed authorizations:
+
+- **No gas needed** — The wallet signs a typed data message (EIP-712), not a transaction
+- **Server submits** — The server submits the authorization on-chain
+- **USDC only** — Only works with USDC on Base network
+- **Time-bounded** — Authorization has `validAfter` and `validBefore` timestamps
+- **Nonce-protected** — Each authorization uses a unique random nonce
+
+## Payment Payload Structure
+
+The signed payment is encoded as a base64 JSON payload:
+
+```json
+{
+  "x402Version": 2,
+  "resource": {
+    "url": "https://api.easy-node.xyz/x402/order",
+    "description": "Order creation",
+    "mimeType": "application/json"
+  },
+  "accepted": {
+    "scheme": "exact",
+    "network": "eip155:8453",
+    "amount": "5000000",
+    "payTo": "0x...",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "payload": {
+    "authorization": {
+      "from": "0x...",
+      "to": "0x...",
+      "value": "5000000",
+      "validAfter": "...",
+      "validBefore": "...",
+      "nonce": "0x..."
+    },
+    "signature": "0x..."
+  }
+}
+```

@@ -1,0 +1,49 @@
+---
+title: "Security"
+description: "Security practices and private key management"
+---
+
+# Security
+
+## Private Key Storage
+
+When using the `setup` wizard, your private key is saved to `~/.easy-node/.env` with file permissions set to `600` (owner read/write only).
+
+**Recommendations:**
+- Never commit `.env` files to version control
+- Use a dedicated wallet for MCP purchases — do not use your main wallet
+- Fund the wallet with only the USDC you plan to spend
+
+## Max Payment Protection
+
+The `EASYNODE_MAX_PAYMENT` environment variable (default: 100 USDC) caps the maximum amount per transaction. If a product costs more than this limit, the purchase is rejected before any signature is created.
+
+To increase the limit:
+
+```bash
+# In ~/.easy-node/.env
+EASYNODE_MAX_PAYMENT=500
+```
+
+Or via environment variable:
+
+```json
+{
+  "env": {
+    "EASYNODE_MAX_PAYMENT": "500"
+  }
+}
+```
+
+## What Gets Signed
+
+Your wallet only signs **EIP-3009 TransferWithAuthorization** messages for USDC transfers. The MCP server never:
+
+- Signs arbitrary transactions
+- Approves token spending
+- Interacts with smart contracts beyond USDC transfer
+- Sends ETH or other tokens
+
+## Instance Secrets Encryption
+
+Connection details (IP, SSH credentials) are encrypted server-side using ECIES (Elliptic Curve Integrated Encryption Scheme) with your wallet's public key. Decryption happens locally — secrets never travel in plaintext.

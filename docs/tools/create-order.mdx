@@ -1,0 +1,50 @@
+---
+title: "create_order"
+description: "Purchase a VPS or blockchain node product"
+---
+
+# create_order
+
+Purchase a VPS or blockchain node product using USDC on Base. Handles the x402 payment flow automatically. Returns order details with ID and status.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `productId` | `string` | Yes | Product ID to purchase |
+| `period` | `number` | Yes | Subscription period in months |
+| `quantity` | `number` | No | Number of instances to purchase (default: 1) |
+| `customName` | `string` | No | Custom name for the instance (max 100 characters) |
+
+## Example Usage
+
+```
+Purchase 3 months of product abc123
+```
+
+```
+Buy 1 month of VPS-XS with the name "my-server"
+```
+
+## Example Response
+
+```markdown
+## Order Created Successfully
+
+**Order ID:** order_xyz789
+**Status:** completed
+**User:** 0x1234...abcd
+**Created:** 2025-01-15T10:30:00.000Z
+
+### Products:
+- Product: abc123
+  Period: 3 month(s)
+  Quantity: 1
+
+### Instance:
+- ID: inst_456
+- Type: vps
+- Status: provisioning
+
+> Use `get_order` with order ID to check provisioning status and get instance details.
+```

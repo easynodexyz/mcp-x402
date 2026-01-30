@@ -1,0 +1,45 @@
+---
+title: "renew_instance"
+description: "Renew an instance subscription"
+---
+
+# renew_instance
+
+Renew an existing VPS or Node instance subscription using USDC on Base. Extends the subscription period. Handles x402 payment flow automatically.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `instanceId` | `string` | Yes | Instance ID (userNode or userVps ID) to renew |
+| `period` | `number` | Yes | Renewal period in months |
+| `type` | `string` | Yes | Instance type: `"node"` or `"vps"` |
+
+## Example Usage
+
+```
+Renew my VPS instance inst_456 for 3 months
+```
+
+## Example Response
+
+```markdown
+## Instance Renewal Successful
+
+**Order ID:** order_ren123
+**Kind:** renewal
+**Status:** completed
+**User:** 0x1234...abcd
+**Created:** 2025-04-10T14:00:00.000Z
+
+### Renewal Details:
+- Product: vps-xs
+  Period: 3 month(s)
+
+### Instance:
+- ID: inst_456
+- Type: vps
+- Status: active
+
+> Subscription has been extended. Use `get_instance` to check updated details.
+```

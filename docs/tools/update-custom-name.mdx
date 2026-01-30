@@ -1,0 +1,32 @@
+---
+title: "update_custom_name"
+description: "Set or update the custom name of an instance"
+---
+
+# update_custom_name
+
+Set or update the custom name of a VPS or Node instance. Useful for labeling instances with friendly names.
+
+## Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `instanceId` | `string` | Yes | Instance ID (userNode or userVps ID) to update |
+| `type` | `string` | Yes | Instance type: `"node"` or `"vps"` |
+| `customName` | `string` | Yes | Custom name for the instance (max 100 characters) |
+
+## Example Usage
+
+```
+Rename instance inst_456 to "my-validator"
+```
+
+## Example Response
+
+```markdown
+## Custom Name Updated
+
+**Instance ID:** inst_456
+**Type:** vps
+**Custom Name:** my-validator
+```

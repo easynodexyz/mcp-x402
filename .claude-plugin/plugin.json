@@ -1,0 +1,15 @@
+{
+  "name": "Easy Node x402",
+  "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
+  "version": "0.1.0",
+  "mcpServers": {
+    "mcp-x402": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"],
+      "env": {
+        "EASYNODE_PRIVATE_KEY": "",
+        "EASYNODE_MAX_PAYMENT": "100"
+      }
+    }
+  }
+}

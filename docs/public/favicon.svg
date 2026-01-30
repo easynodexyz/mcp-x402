@@ -1,0 +1,10 @@
+<!--
+  NOTE: This is a placeholder SVG favicon.
+  For production, generate a proper favicon.ico file from this SVG using a tool like:
+  - https://realfavicongenerator.net/
+  - ImageMagick: convert favicon.svg -define icon:auto-resize=64,48,32,16 favicon.ico
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#6366F1" rx="4"/>
+  <text x="16" y="22" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">EN</text>
+</svg>
