@@ -20,9 +20,7 @@ function makeDetails(
   };
 }
 
-function mockClient(
-  details: InstanceDetails & { secrets: InstanceSecrets | null }
-): X402Client {
+function mockClient(details: InstanceDetails & { secrets: InstanceSecrets | null }): X402Client {
   return {
     getInstanceDetails: vi.fn().mockResolvedValue(details),
   } as unknown as X402Client;
