@@ -165,7 +165,7 @@ export async function createServer(): Promise<Server> {
   const server = new Server(
     {
       name: 'easy-node-x402',
-      version: '0.0.1',
+      version: '0.1.0',
     },
     {
       capabilities: {
