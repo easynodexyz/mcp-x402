@@ -20,7 +20,7 @@ const program = new Command();
 program
   .name('mcp-x402')
   .description('MCP server for AI agents to purchase VPS/Node products via x402 with USDC on Base')
-  .version('0.1.0');
+  .version('0.0.1');
 
 program
   .command('setup')

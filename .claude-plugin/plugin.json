@@ -1,7 +1,7 @@
 {
   "name": "Easy Node x402",
   "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "mcpServers": {
     "mcp-x402": {
       "command": "npx",
