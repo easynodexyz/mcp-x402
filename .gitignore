@@ -46,4 +46,3 @@ AGENT.md
 # Build
 dist
 build
-.changeset/*.md
