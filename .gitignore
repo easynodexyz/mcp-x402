@@ -26,7 +26,6 @@ node_modules/
 
 *.tgz
 
-
 # dotenv environment variable files
 
 .env
@@ -43,3 +42,7 @@ AGENT.md
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# Build
+dist
+build
