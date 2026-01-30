@@ -1,22 +1,24 @@
-name: Release
+name: Canary Release
 
 on:
-  push:
-    branches:
-      - main
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to release from (defaults to current branch)'
+        required: false
+        type: string
 
 jobs:
-  release:
-    name: Release
+  canary-release:
+    name: Canary Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.branch || github.ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -33,13 +35,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create Release PR or Publish
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
-          commit: 'chore(release): version package'
-          title: 'chore(release): version package'
+      - name: Publish Snapshot
+        run: npx changeset version --snapshot canary && npm publish --tag canary
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

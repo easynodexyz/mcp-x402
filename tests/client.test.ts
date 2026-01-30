@@ -28,7 +28,11 @@ function mockFetchResponse(body: unknown, status = 200, headers?: Record<string,
 function make402Headers(amount = '5000000') {
   const paymentRequired = {
     x402Version: 2,
-    resource: { url: 'https://api.test.xyz/x402/order', description: 'order', mimeType: 'application/json' },
+    resource: {
+      url: 'https://api.test.xyz/x402/order',
+      description: 'order',
+      mimeType: 'application/json',
+    },
     accepts: [
       {
         scheme: 'exact',
@@ -244,9 +248,9 @@ describe('X402Client', () => {
       fetchMock.mockResolvedValueOnce(resp402);
 
       const client = new X402Client(makeConfig());
-      await expect(
-        client.createOrder({ productId: 'p1', period: 1, quantity: 1 })
-      ).rejects.toThrow('402 response missing payment-required header');
+      await expect(client.createOrder({ productId: 'p1', period: 1, quantity: 1 })).rejects.toThrow(
+        '402 response missing payment-required header'
+      );
     });
 
     it('throws when amount exceeds maxPayment', async () => {
@@ -264,18 +268,18 @@ describe('X402Client', () => {
       fetchMock.mockResolvedValueOnce(resp402);
 
       const client = new X402Client(makeConfig({ maxPayment: 100 }));
-      await expect(
-        client.createOrder({ productId: 'p1', period: 1, quantity: 1 })
-      ).rejects.toThrow('exceeds maximum allowed');
+      await expect(client.createOrder({ productId: 'p1', period: 1, quantity: 1 })).rejects.toThrow(
+        'exceeds maximum allowed'
+      );
     });
 
     it('throws on non-402 error response', async () => {
       fetchMock.mockResolvedValueOnce(mockFetchResponse('server error', 500));
 
       const client = new X402Client(makeConfig());
-      await expect(
-        client.createOrder({ productId: 'p1', period: 1, quantity: 1 })
-      ).rejects.toThrow('Order failed');
+      await expect(client.createOrder({ productId: 'p1', period: 1, quantity: 1 })).rejects.toThrow(
+        'Order failed'
+      );
     });
   });
 
