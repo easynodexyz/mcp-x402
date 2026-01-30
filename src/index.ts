@@ -13,6 +13,8 @@ export type { X402Config, ConfigValidationResult } from './config.js';
 
 export { createServer, runServer } from './server.js';
 
+export * from './tools/index.js';
+
 const program = new Command();
 
 program
