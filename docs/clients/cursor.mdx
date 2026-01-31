@@ -5,14 +5,31 @@ description: "Configure MCP x402 with Cursor IDE"
 
 # Cursor
 
+## Remote Server
+
 Add to your Cursor MCP settings (`.cursor/mcp.json`):
 
 ```json
 {
   "mcpServers": {
-    "@easynodexyz/mcp-x402": {
+    "easy-node": {
+      "url": "https://mcp-x402.easy-node.xyz/mcp",
+      "headers": {
+        "X-Easynode-Private-Key": "0x..."
+      }
+    }
+  }
+}
+```
+
+## Local Server
+
+```json
+{
+  "mcpServers": {
+    "easy-node": {
       "command": "npx",
-      "args": ["@easynodexyz/mcp-x402"]
+      "args": ["-y", "@easynodexyz/mcp-x402"]
     }
   }
 }
