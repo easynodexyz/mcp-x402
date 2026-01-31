@@ -5,6 +5,12 @@ description: "Configure MCP x402 with VS Code and Continue extension"
 
 # VS Code + Continue
 
+<Note>
+Continue supports **local MCP servers only**. For remote server access, use [VS Code Copilot](/clients/all-clients) or another client with remote support.
+</Note>
+
+## Local Server
+
 Add to your Continue configuration (`~/.continue/config.json`):
 
 ```json
@@ -15,7 +21,7 @@ Add to your Continue configuration (`~/.continue/config.json`):
         "transport": {
           "type": "stdio",
           "command": "npx",
-          "args": ["@easynodexyz/mcp-x402"]
+          "args": ["-y", "@easynodexyz/mcp-x402"]
         }
       }
     ]

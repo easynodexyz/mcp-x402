@@ -21,13 +21,15 @@ The [x402 payment protocol](https://www.x402.org/) is handled automatically — 
 ## Quick Start
 
 <Steps>
-  <Step title="Install & Setup">
-    ```bash
-    npx @easynodexyz/mcp-x402 setup
-    ```
+  <Step title="Get a wallet">
+    Create a dedicated wallet and fund it with USDC on Base.
   </Step>
-  <Step title="Configure your IDE">
-    Add the MCP server to [Claude Desktop](/clients/claude-desktop), [Claude Code](/clients/claude-code), [Cursor](/clients/cursor), or [VS Code](/clients/vscode-continue).
+  <Step title="Connect to the server">
+    **Remote** (no install): Point your client at `https://mcp-x402.easy-node.xyz/mcp` with your private key in the `X-Easynode-Private-Key` header.
+
+    **Local**: Run `npx @easynodexyz/mcp-x402 setup` and follow the wizard.
+
+    See the [installation guide](/installation) or [all supported clients](/clients/all-clients).
   </Step>
   <Step title="Start using">
     Ask your AI assistant: "List available VPS products" or "Purchase 1 month of VPS-XS"

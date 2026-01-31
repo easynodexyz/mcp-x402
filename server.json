@@ -1,34 +1,46 @@
 {
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.easynodexyz/mcp-x402",
   "title": "Easy Node x402",
-  "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
-  "version": "0.0.1",
-  "website": "https://easy-node.xyz",
-  "repository": "https://github.com/easynodexyz/mcp-x402",
+  "description": "MCP server for AI agents to purchase VPS/Node products via Easy Node's x402 API with USDC on Base",
+  "repository": {
+    "url": "https://github.com/easynodexyz/mcp-x402",
+    "source": "github"
+  },
+  "websiteUrl": "https://easy-node.xyz",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/easynodexyz/mcp-x402/main/mcpb/icon.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "version": "0.0.2",
   "packages": [
     {
-      "type": "npm",
-      "name": "@easynodexyz/mcp-x402",
-      "version": "0.0.1",
-      "transport": "stdio",
-      "environment": {
-        "EASYNODE_PRIVATE_KEY": {
-          "type": "string",
-          "description": "Wallet private key (0x...)",
-          "secret": true,
-          "required": true
+      "registryType": "npm",
+      "identifier": "@easynodexyz/mcp-x402",
+      "version": "0.0.2",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "EASYNODE_PRIVATE_KEY",
+          "description": "Wallet private key (0x-prefixed)",
+          "isRequired": true,
+          "isSecret": true
         },
-        "EASYNODE_API_URL": {
-          "type": "string",
+        {
+          "name": "EASYNODE_API_URL",
           "description": "API base URL",
-          "default": "https://api.easy-node.xyz"
+          "isRequired": false,
+          "isSecret": false
         },
-        "EASYNODE_MAX_PAYMENT": {
-          "type": "string",
-          "description": "Max USDC per transaction",
-          "default": "100"
+        {
+          "name": "EASYNODE_MAX_PAYMENT",
+          "description": "Max USDC per tx",
+          "isRequired": false,
+          "isSecret": false
         }
-      }
+      ]
     }
   ]
 }

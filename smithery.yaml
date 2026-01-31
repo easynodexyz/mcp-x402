@@ -1,28 +1,10 @@
 startCommand:
-  type: stdio
+  type: http
   configSchema:
     type: object
     properties:
       EASYNODE_PRIVATE_KEY:
         type: string
-        description: 'Wallet private key (0x...)'
-      EASYNODE_API_URL:
-        type: string
-        description: 'API base URL'
-        default: 'https://api.easy-node.xyz'
-      EASYNODE_MAX_PAYMENT:
-        type: string
-        description: 'Max USDC per transaction'
-        default: '1000'
+        description: 'Wallet private key (0x...) — sent via X-Easynode-Private-Key header'
     required:
       - EASYNODE_PRIVATE_KEY
-  commandFunction: |-
-    (config) => ({
-      command: 'npx',
-      args: ['-y', '@easynodexyz/mcp-x402'],
-      env: {
-        EASYNODE_PRIVATE_KEY: config.EASYNODE_PRIVATE_KEY,
-        EASYNODE_API_URL: config.EASYNODE_API_URL || 'https://api.easy-node.xyz',
-        EASYNODE_MAX_PAYMENT: config.EASYNODE_MAX_PAYMENT || '100'
-      }
-    })

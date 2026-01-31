@@ -5,14 +5,20 @@ description: "Configure MCP x402 with Claude Desktop"
 
 # Claude Desktop
 
+<Note>
+Claude Desktop supports **local MCP servers only**. It does not support remote MCP connections natively. Use [Claude Code](/clients/claude-code) or [Cursor](/clients/cursor) for remote server access.
+</Note>
+
+## Local Server
+
 Add to your `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
-    "@easynodexyz/mcp-x402": {
+    "easy-node": {
       "command": "npx",
-      "args": ["@easynodexyz/mcp-x402"]
+      "args": ["-y", "@easynodexyz/mcp-x402"]
     }
   }
 }

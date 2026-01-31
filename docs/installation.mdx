@@ -1,11 +1,35 @@
 ---
 title: "Installation"
-description: "Install and configure the Easy Node MCP x402 server"
+description: "Install the Easy Node MCP server locally or connect to the remote server"
 ---
 
 # Installation
 
-## Interactive Setup (Recommended)
+There are two ways to use the Easy Node MCP server:
+
+- **Remote Server** — Connect to `https://mcp-x402.easy-node.xyz/mcp` with a header. No install needed.
+- **Local Server** — Run `npx @easynodexyz/mcp-x402` on your machine.
+
+---
+
+## Remote Server
+
+Point your MCP client at the hosted server and pass your private key via header:
+
+- **URL:** `https://mcp-x402.easy-node.xyz/mcp`
+- **Header:** `X-Easynode-Private-Key: 0x...`
+
+No installation, no Node.js required. See [client setup pages](/clients/claude-code) for per-client config.
+
+<Warning>
+Your private key is sent via **HTTPS header** — encrypted in transit, never in URL or logs. The server is **stateless**: the key is used per-request for EIP-3009 signing and is never stored. Always use a **dedicated wallet** with limited USDC.
+</Warning>
+
+---
+
+## Local Server
+
+### Interactive Setup (Recommended)
 
 ```bash
 npx @easynodexyz/mcp-x402 setup
@@ -16,25 +40,7 @@ This wizard will:
 2. Save configuration to `~/.easy-node/.env`
 3. Output the IDE config to copy
 
-## Manual Setup
-
-### Option A: Environment variables in IDE config
-
-```json
-{
-  "mcpServers": {
-    "mcp-x402": {
-      "command": "npx",
-      "args": ["-y", "@easynodexyz/mcp-x402"],
-      "env": {
-        "EASYNODE_PRIVATE_KEY": "0x..."
-      }
-    }
-  }
-}
-```
-
-### Option B: Config file
+### Manual Setup
 
 Create `~/.easy-node/.env`:
 
@@ -43,3 +49,13 @@ EASYNODE_PRIVATE_KEY=0x...
 EASYNODE_API_URL=https://api.easy-node.xyz
 EASYNODE_MAX_PAYMENT=1000
 ```
+
+Then add the server to your IDE — see [client setup pages](/clients/claude-code) for per-client instructions.
+
+---
+
+## Next Steps
+
+- [Configure your client](/clients/claude-code)
+- [Browse all supported clients](/clients/all-clients)
+- [Security guide](/guides/security)

@@ -1,17 +1,11 @@
 {
   "name": "@easynodexyz/mcp-x402",
   "version": "0.0.2",
+  "mcpName": "io.github.easynodexyz/mcp-x402",
+  "homepage": "https://github.com/easynodexyz/mcp-x402#readme",
   "description": "MCP server for AI agents to purchase VPS/Node products via Easy Node's x402 API with USDC on Base",
-  "type": "module",
-  "main": "./dist/index.js",
-  "bin": {
-    "mcp-x402": "./dist/index.js"
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "author": "Easy Node <contact@easy-node.xyz>",
+  "license": "BUSL-1.1",
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
     "dev": "tsc --watch",
@@ -27,7 +21,12 @@
     "prepublishOnly": "npm run build",
     "release": "npm run build && changeset publish",
     "docs:dev": "cd docs && mintlify dev",
-    "docs:build": "cd docs && mintlify build"
+    "docs:build": "cd docs && mintlify build",
+    "pack-mcpb": "npm run build && rm -rf node_modules && npm install --omit=dev && cp mcpb/manifest.json manifest.json && cp mcpb/icon.png icon.png && npx -y @anthropic-ai/mcpb validate . && npx -y @anthropic-ai/mcpb pack . mcpb/easynode-x402.mcpb && rm manifest.json icon.png && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/easynodexyz/mcp-x402.git"
   },
   "keywords": [
     "easy-node",
@@ -42,16 +41,19 @@
     "claude-code-plugin",
     "model-context-protocol"
   ],
-  "author": "Easy Node <contact@easy-node.xyz>",
-  "license": "BUSL-1.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/easynodexyz/mcp-x402.git"
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "mcp-x402": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "bugs": {
     "url": "https://github.com/easynodexyz/mcp-x402/issues"
   },
-  "homepage": "https://easy-node.xyz",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -64,11 +66,13 @@
     "@noble/secp256k1": "3.0.0",
     "commander": "14.0.2",
     "dotenv": "17.2.3",
+    "express": "5.2.1",
     "viem": "2.45.0",
     "zod": "4.3.6"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.8",
+    "@types/express": "5.0.6",
     "@types/node": "25.1.0",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",

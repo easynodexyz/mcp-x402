@@ -1,0 +1,89 @@
+{
+  "manifest_version": "0.3",
+  "name": "@easynodexyz/mcp-x402",
+  "display_name": "Easy Node x402",
+  "description": "MCP server for AI agents to purchase VPS/Node products via Easy Node's x402 API with USDC on Base",
+  "version": "0.0.2",
+  "author": {
+    "name": "Easy Node",
+    "email": "contact@easy-node.xyz",
+    "url": "https://easy-node.xyz"
+  },
+  "license": "BUSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/easynodexyz/mcp-x402.git"
+  },
+  "homepage": "https://easy-node.xyz",
+  "documentation": "https://docs.easy-node.xyz/mcp",
+  "support": "https://github.com/easynodexyz/mcp-x402/issues",
+  "icon": "icon.png",
+  "keywords": ["easy-node", "mcp", "x402", "vps", "blockchain", "usdc", "base", "ai-agents"],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"]
+    }
+  },
+  "user_config": {
+    "EASYNODE_PRIVATE_KEY": {
+      "type": "string",
+      "title": "Private Key",
+      "description": "Wallet private key for signing x402 payments (0x-prefixed hex)",
+      "required": true,
+      "sensitive": true
+    },
+    "EASYNODE_API_URL": {
+      "type": "string",
+      "title": "API URL",
+      "description": "Easy Node API base URL",
+      "required": false,
+      "default": "https://api.easy-node.xyz"
+    },
+    "EASYNODE_MAX_PAYMENT": {
+      "type": "string",
+      "title": "Max Payment",
+      "description": "Maximum USDC amount per transaction",
+      "required": false,
+      "default": "100"
+    }
+  },
+  "tools": [
+    {
+      "name": "list_products",
+      "description": "List available VPS and blockchain node products with USDC pricing"
+    },
+    {
+      "name": "create_order",
+      "description": "Purchase a VPS or blockchain node product using USDC on Base via x402 payment flow"
+    },
+    {
+      "name": "get_order",
+      "description": "Get the status and details of an existing order by ID"
+    },
+    {
+      "name": "list_instances",
+      "description": "List all VPS and Node instances owned by the wallet"
+    },
+    {
+      "name": "get_instance",
+      "description": "Get detailed information about a specific instance including decrypted connection credentials"
+    },
+    {
+      "name": "renew_instance",
+      "description": "Renew an existing VPS or Node instance subscription using USDC on Base"
+    },
+    {
+      "name": "update_custom_name",
+      "description": "Set or update the custom name of a VPS or Node instance"
+    }
+  ],
+  "compatibility": {
+    "runtimes": {
+      "node": ">=20.0.0"
+    },
+    "platforms": ["darwin", "linux", "win32"]
+  }
+}

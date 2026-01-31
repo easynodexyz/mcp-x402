@@ -1,0 +1,26 @@
+# Source & config
+src/
+tsconfig.json
+eslint.config.js
+.prettierrc
+.prettierignore
+vitest.config.ts
+.changeset/
+
+# Docs
+docs/
+
+# Dev files
+.github/
+.env*
+*.test.ts
+*.spec.ts
+
+# mcpb source
+mcpb/
+
+# Misc
+.git/
+.claude/
+CLAUDE.md
+CHANGELOG.md

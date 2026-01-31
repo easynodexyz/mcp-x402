@@ -1,0 +1,642 @@
+---
+title: "All Clients"
+description: "MCP x402 configuration for every supported client"
+---
+
+# All Supported Clients
+
+Every MCP client can connect to Easy Node via a **local server** (npx) or a **remote server** (HTTPS + header), depending on client support.
+
+**Remote URL:** `https://mcp-x402.easy-node.xyz/mcp`
+**Header:** `X-Easynode-Private-Key: 0x...`
+
+<Warning>
+Your private key is sent via **HTTPS header** — encrypted in transit, never in URLs or logs. The server is **stateless** and never stores your key. Always use a **dedicated wallet** with limited USDC.
+</Warning>
+
+## Compatibility
+
+| Client | Local | Remote | Config |
+|--------|:-----:|:------:|--------|
+| [Claude Code](#claude-code) | ✅ | ✅ | CLI |
+| [Cursor](#cursor) | ✅ | ✅ | `.cursor/mcp.json` |
+| [OpenCode](#opencode) | ✅ | ✅ | `opencode.json` |
+| [Claude Desktop](#claude-desktop) | ✅ | ❌ | `claude_desktop_config.json` |
+| [VS Code (Continue)](#vs-code-continue) | ✅ | ❌ | `~/.continue/config.json` |
+| [VS Code (Copilot)](#vs-code-copilot) | ✅ | ✅ | `.vscode/mcp.json` |
+| [Windsurf](#windsurf) | ✅ | ✅ | MCP config |
+| [Cline](#cline) | ✅ | ✅ | UI / JSON |
+| [Roo Code](#roo-code) | ✅ | ✅ | Config file |
+| [Kilo Code](#kilo-code) | ✅ | ✅ | `.kilocode/mcp.json` |
+| [Gemini CLI](#gemini-cli) | ✅ | ✅ | `~/.gemini/settings.json` |
+| [GitHub Copilot CLI](#github-copilot-cli) | ✅ | ✅ | `~/.copilot/mcp-config.json` |
+| [GitHub Copilot Agent](#github-copilot-agent) | ❌ | ✅ | Repo settings |
+| [JetBrains](#jetbrains) | ✅ | ❌ | Settings UI |
+| [Zed](#zed) | ✅ | ❌ | `settings.json` |
+| [Amp](#amp) | ❌ | ✅ | CLI |
+| [Trae](#trae) | ✅ | ✅ | JSON config |
+| [Augment Code](#augment-code) | ✅ | ❌ | `augment.advanced` |
+| [Amazon Q](#amazon-q) | ✅ | ❌ | Config file |
+| [Warp](#warp) | ✅ | ❌ | Settings UI |
+| [LM Studio](#lm-studio) | ✅ | ❌ | `mcp.json` |
+| [Qwen Code](#qwen-code) | ✅ | ✅ | `~/.qwen/settings.json` |
+| [Visual Studio 2022](#visual-studio-2022) | ✅ | ✅ | Settings JSON |
+| [Docker](#docker) | ✅ | ❌ | MCP config |
+| [BoltAI](#boltai) | ✅ | ❌ | Settings UI |
+| [Perplexity Desktop](#perplexity-desktop) | ✅ | ❌ | Settings UI |
+| [Kiro](#kiro) | ✅ | ❌ | Settings UI |
+
+---
+
+## Claude Code
+
+<Tabs>
+  <Tab title="Remote">
+    ```bash
+    claude mcp add --transport http \
+      --header "X-Easynode-Private-Key: 0x..." \
+      easy-node https://mcp-x402.easy-node.xyz/mcp
+    ```
+  </Tab>
+  <Tab title="Local">
+    ```bash
+    claude mcp add easy-node -- npx -y @easynodexyz/mcp-x402
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Cursor
+
+<Tabs>
+  <Tab title="Remote">
+    `.cursor/mcp.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `.cursor/mcp.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## OpenCode
+
+<Tabs>
+  <Tab title="Remote">
+    `opencode.json`:
+    ```json
+    {
+      "mcp": {
+        "easy-node": {
+          "type": "remote",
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." },
+          "enabled": true
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `opencode.json`:
+    ```json
+    {
+      "mcp": {
+        "easy-node": {
+          "type": "local",
+          "command": ["npx", "-y", "@easynodexyz/mcp-x402"],
+          "enabled": true
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Claude Desktop
+
+Local only — Claude Desktop does not support remote MCP servers.
+
+`claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "easy-node": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+---
+
+## VS Code (Continue)
+
+Local only.
+
+`~/.continue/config.json`:
+```json
+{
+  "experimental": {
+    "modelContextProtocolServers": [
+      {
+        "transport": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    ]
+  }
+}
+```
+
+---
+
+## VS Code (Copilot)
+
+<Tabs>
+  <Tab title="Remote">
+    `.vscode/mcp.json`:
+    ```json
+    {
+      "servers": {
+        "easy-node": {
+          "type": "http",
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `.vscode/mcp.json`:
+    ```json
+    {
+      "servers": {
+        "easy-node": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Windsurf
+
+<Tabs>
+  <Tab title="Remote">
+    `~/.codeium/windsurf/mcp_config.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "serverUrl": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `~/.codeium/windsurf/mcp_config.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Cline
+
+<Tabs>
+  <Tab title="Remote">
+    In Cline MCP settings, add a server with:
+    - **Type:** Streamable HTTP
+    - **URL:** `https://mcp-x402.easy-node.xyz/mcp`
+    - **Headers:** `X-Easynode-Private-Key: 0x...`
+  </Tab>
+  <Tab title="Local">
+    In Cline MCP settings, add a server with:
+    - **Command:** `npx`
+    - **Args:** `-y @easynodexyz/mcp-x402`
+  </Tab>
+</Tabs>
+
+---
+
+## Roo Code
+
+<Tabs>
+  <Tab title="Remote">
+    In Roo Code MCP config:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Kilo Code
+
+<Tabs>
+  <Tab title="Remote">
+    `.kilocode/mcp.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `.kilocode/mcp.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Gemini CLI
+
+<Tabs>
+  <Tab title="Remote">
+    `~/.gemini/settings.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `~/.gemini/settings.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## GitHub Copilot CLI
+
+<Tabs>
+  <Tab title="Remote">
+    `~/.copilot/mcp-config.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `~/.copilot/mcp-config.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## GitHub Copilot Agent
+
+Remote only — configured at the repository level.
+
+In your repository settings, add a MCP server:
+- **URL:** `https://mcp-x402.easy-node.xyz/mcp`
+- **Headers:** `X-Easynode-Private-Key: 0x...`
+
+---
+
+## JetBrains
+
+Local only — JetBrains IDEs (IntelliJ, WebStorm, PyCharm, etc.) support MCP via Settings UI.
+
+1. Open **Settings** → **Tools** → **AI Assistant** → **MCP Servers**
+2. Add a new server:
+   - **Command:** `npx`
+   - **Args:** `-y @easynodexyz/mcp-x402`
+
+---
+
+## Zed
+
+Local only.
+
+In Zed `settings.json`:
+```json
+{
+  "context_servers": {
+    "easy-node": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "@easynodexyz/mcp-x402"]
+      }
+    }
+  }
+}
+```
+
+---
+
+## Amp
+
+Remote only.
+
+```bash
+amp mcp add --transport http \
+  --header "X-Easynode-Private-Key: 0x..." \
+  easy-node https://mcp-x402.easy-node.xyz/mcp
+```
+
+---
+
+## Trae
+
+<Tabs>
+  <Tab title="Remote">
+    In Trae MCP config:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Augment Code
+
+Local only.
+
+In `augment.advanced` settings, add MCP server:
+- **Command:** `npx`
+- **Args:** `-y @easynodexyz/mcp-x402`
+
+---
+
+## Amazon Q
+
+Local only.
+
+In Amazon Q Developer config:
+```json
+{
+  "mcpServers": {
+    "easy-node": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+---
+
+## Warp
+
+Local only — configure via Warp Settings UI.
+
+1. Open **Settings** → **AI** → **MCP Servers**
+2. Add server with command: `npx -y @easynodexyz/mcp-x402`
+
+---
+
+## LM Studio
+
+Local only.
+
+In LM Studio `mcp.json`:
+```json
+{
+  "mcpServers": {
+    "easy-node": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+---
+
+## Qwen Code
+
+<Tabs>
+  <Tab title="Remote">
+    `~/.qwen/settings.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    `~/.qwen/settings.json`:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Visual Studio 2022
+
+<Tabs>
+  <Tab title="Remote">
+    In Visual Studio MCP settings:
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "url": "https://mcp-x402.easy-node.xyz/mcp",
+          "headers": { "X-Easynode-Private-Key": "0x..." }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Local">
+    ```json
+    {
+      "mcpServers": {
+        "easy-node": {
+          "command": "npx",
+          "args": ["-y", "@easynodexyz/mcp-x402"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Docker
+
+Local only.
+
+```json
+{
+  "mcpServers": {
+    "easy-node": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+
+---
+
+## BoltAI
+
+Local only — configure via BoltAI Settings UI.
+
+1. Open **Settings** → **MCP Servers**
+2. Add server with command: `npx -y @easynodexyz/mcp-x402`
+
+---
+
+## Perplexity Desktop
+
+Local only — configure via Settings UI.
+
+1. Open **Settings** → **MCP Servers**
+2. Add server with command: `npx -y @easynodexyz/mcp-x402`
+
+---
+
+## Kiro
+
+Local only — configure via Settings UI.
+
+1. Open **Settings** → **MCP Servers**
+2. Add server with command: `npx -y @easynodexyz/mcp-x402`
