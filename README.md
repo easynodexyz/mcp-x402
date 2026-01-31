@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/@easynodexyz/mcp-x402)](https://www.npmjs.com/package/@easynodexyz/mcp-x402)
 [![Node](https://img.shields.io/node/v/@easynodexyz/mcp-x402)](https://nodejs.org)
-[![Docs](https://img.shields.io/badge/docs-mintlify-blue)](https://docs.easy-node.xyz)
+[![Docs](https://img.shields.io/badge/docs-mintlify-blue)](https://x402.easy-node.xyz)
 
 # @easynodexyz/mcp-x402
 
@@ -45,7 +45,7 @@ Choose your IDE and add the MCP server configuration.
 
 ## Documentation
 
-Full documentation available at [docs.easy-node.xyz](https://docs.easy-node.xyz).
+Full documentation available at [x402.easy-node.xyz](https://x402.easy-node.xyz).
 
 ---
 

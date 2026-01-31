@@ -11,7 +11,8 @@ export type { Product, Order, CreateOrderParams } from './client.js';
 export { loadConfig, getConfigPath, getConfigDir } from './config.js';
 export type { X402Config, ConfigValidationResult } from './config.js';
 
-export { createServer, runServer } from './server.js';
+export { createMcpServer, runServer } from './server.js';
+export { runHttpServer } from './http.js';
 
 export * from './tools/index.js';
 
@@ -32,8 +33,15 @@ program
 program
   .command('serve', { isDefault: true })
   .description('Start the MCP server (default)')
-  .action(async () => {
-    await runServer();
+  .option('-t, --transport <type>', 'Transport type: stdio or http', 'stdio')
+  .option('-p, --port <number>', 'HTTP server port (http transport only)', '3402')
+  .action(async (options: { transport: string; port: string }) => {
+    if (options.transport === 'http') {
+      const { runHttpServer } = await import('./http.js');
+      await runHttpServer(parseInt(options.port, 10));
+    } else {
+      await runServer();
+    }
   });
 
 program.parseAsync(process.argv).catch((error) => {

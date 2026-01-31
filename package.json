@@ -27,7 +27,8 @@
     "prepublishOnly": "npm run build",
     "release": "npm run build && changeset publish",
     "docs:dev": "cd docs && mintlify dev",
-    "docs:build": "cd docs && mintlify build"
+    "docs:build": "cd docs && mintlify build",
+    "pack-mcpb": "npm install && npm run build && rm -rf node_modules && npm install --omit=dev && cp mcpb/manifest.json manifest.json && cp mcpb/icon.png icon.png && mcpb validate manifest.json && mcpb pack . mcpb/mcp-x402.mcpb && rm manifest.json icon.png && npm install"
   },
   "keywords": [
     "easy-node",
@@ -52,6 +53,7 @@
     "url": "https://github.com/easynodexyz/mcp-x402/issues"
   },
   "homepage": "https://easy-node.xyz",
+  "mcpName": "xyz.easy-node/mcp-x402",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -64,11 +66,13 @@
     "@noble/secp256k1": "3.0.0",
     "commander": "14.0.2",
     "dotenv": "17.2.3",
+    "express": "5.2.1",
     "viem": "2.45.0",
     "zod": "4.3.6"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.8",
+    "@types/express": "5.0.6",
     "@types/node": "25.1.0",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",

@@ -148,20 +148,7 @@ const TOOLS = [
   },
 ];
 
-export async function createServer(): Promise<Server> {
-  // Load and validate configuration
-  const configResult = loadConfig();
-
-  if (!configResult.valid || !configResult.config) {
-    console.error('Configuration errors:');
-    configResult.errors.forEach((e) => console.error(`  - ${e}`));
-    console.error('\nRun "npx @easynodexyz/mcp-x402 setup" to configure.');
-    process.exit(1);
-  }
-
-  const client = new X402Client(configResult.config);
-
-  // Create MCP server
+export function createMcpServer(client: X402Client): Server {
   const server = new Server(
     {
       name: 'easy-node-x402',
@@ -259,7 +246,17 @@ export async function createServer(): Promise<Server> {
 }
 
 export async function runServer(): Promise<void> {
-  const server = await createServer();
+  const configResult = loadConfig();
+
+  if (!configResult.valid || !configResult.config) {
+    console.error('Configuration errors:');
+    configResult.errors.forEach((e) => console.error(`  - ${e}`));
+    console.error('\nRun "npx @easynodexyz/mcp-x402 setup" to configure.');
+    process.exit(1);
+  }
+
+  const client = new X402Client(configResult.config);
+  const server = createMcpServer(client);
   const transport = new StdioServerTransport();
   await server.connect(transport);
 }
