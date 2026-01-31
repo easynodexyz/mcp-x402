@@ -1,0 +1,54 @@
+name: Publish to MCP Registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (defaults to package.json version)'
+        required: false
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update server.json version
+        run: |
+          jq --arg v "${{ steps.version.outputs.version }}" \
+            '.version = $v | .packages[0].version = $v' \
+            server.json > server.tmp.json && mv server.tmp.json server.json
+
+      - name: Validate server.json
+        run: npx mcp-registry-validator validate server.json
+
+      - name: Install mcp-publisher
+        run: |
+          curl -sL https://github.com/nichochar/mcp-publisher/releases/latest/download/mcp-publisher-linux-amd64 -o mcp-publisher
+          chmod +x mcp-publisher
+
+      - name: Authenticate via GitHub OIDC
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to MCP Registry
+        run: ./mcp-publisher publish
