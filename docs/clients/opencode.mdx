@@ -1,0 +1,43 @@
+---
+title: "OpenCode"
+description: "Configure MCP x402 with OpenCode"
+---
+
+# OpenCode
+
+## Remote Server
+
+Add to your `opencode.json`:
+
+```json
+{
+  "mcp": {
+    "easy-node": {
+      "type": "remote",
+      "url": "https://mcp-x402.easy-node.xyz/mcp",
+      "headers": {
+        "X-Easynode-Private-Key": "0x..."
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+## Local Server
+
+```json
+{
+  "mcp": {
+    "easy-node": {
+      "type": "local",
+      "command": ["npx", "-y", "@easynodexyz/mcp-x402"],
+      "enabled": true
+    }
+  }
+}
+```
+
+## After Configuration
+
+Restart OpenCode to load the MCP server.

@@ -5,7 +5,7 @@ description: "Security practices and private key management"
 
 # Security
 
-## Private Key Storage
+## Private Key Storage (Local Server)
 
 When using the `setup` wizard, your private key is saved to `~/.easy-node/.env` with file permissions set to `600` (owner read/write only).
 
@@ -13,6 +13,15 @@ When using the `setup` wizard, your private key is saved to `~/.easy-node/.env` 
 - Never commit `.env` files to version control
 - Use a dedicated wallet for MCP purchases — do not use your main wallet
 - Fund the wallet with only the USDC you plan to spend
+
+## Remote Server Security
+
+When using the remote server at `https://mcp-x402.easy-node.xyz/mcp`:
+
+- **Header-based auth** — Your private key is sent via the `X-Easynode-Private-Key` HTTPS header, encrypted in transit. It never appears in URLs, query strings, or server logs.
+- **Stateless server** — The key is used only for that single request's EIP-3009 signing. It is never stored, cached, or logged on the server.
+- **HTTPS only** — All communication is TLS-encrypted end-to-end.
+- **Dedicated wallet** — Always use a separate wallet funded with only the USDC you intend to spend.
 
 ## Max Payment Protection
 

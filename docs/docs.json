@@ -25,10 +25,12 @@
           {
             "group": "IDE Clients",
             "pages": [
-              "clients/claude-desktop",
               "clients/claude-code",
               "clients/cursor",
-              "clients/vscode-continue"
+              "clients/opencode",
+              "clients/claude-desktop",
+              "clients/vscode-continue",
+              "clients/all-clients"
             ]
           },
           {
