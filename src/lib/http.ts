@@ -1,23 +1,10 @@
 import express from 'express';
-import { createRequire } from 'node:module';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { X402Client } from './client.js';
-import { createMcpServer, TOOLS } from './server.js';
+import { createMcpServer } from './server.js';
 
 const DEFAULT_API_URL = 'https://api.easy-node.xyz';
 const DEFAULT_MAX_PAYMENT = 100;
-
-const CONFIG_SCHEMA = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
-  type: 'object',
-  properties: {
-    EASYNODE_PRIVATE_KEY: {
-      type: 'string',
-      description: 'Wallet private key (0x...)',
-    },
-  },
-  required: ['EASYNODE_PRIVATE_KEY'],
-};
 
 function isValidPrivateKey(key: string): key is `0x${string}` {
   return /^0x[a-fA-F0-9]{64}$/.test(key);
@@ -29,29 +16,6 @@ export async function runHttpServer(port: number): Promise<void> {
 
   const apiUrl = process.env.EASYNODE_API_URL || DEFAULT_API_URL;
   const maxPayment = Number(process.env.EASYNODE_MAX_PAYMENT) || DEFAULT_MAX_PAYMENT;
-
-  // Smithery config schema endpoint
-  app.get('/.well-known/mcp-config', (_req, res) => {
-    res.json(CONFIG_SCHEMA);
-  });
-
-  // MCP server card for Smithery scanning
-  const require = createRequire(import.meta.url);
-  const { version } = require('../../package.json') as { version: string };
-
-  app.get('/.well-known/mcp/server-card.json', (_req, res) => {
-    res.json({
-      serverInfo: { name: 'easy-node-x402', version },
-      authentication: { required: true, schemes: ['custom-header'] },
-      tools: TOOLS.map((t) => ({
-        name: t.name,
-        description: t.description,
-        inputSchema: t.inputSchema,
-      })),
-      resources: [],
-      prompts: [],
-    });
-  });
 
   // Stateless MCP endpoint
   app.post('/mcp', async (req, res) => {
