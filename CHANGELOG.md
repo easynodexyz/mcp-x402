@@ -1,5 +1,11 @@
 # @easynodexyz/mcp-x402
 
+## 0.1.2
+
+### Patch Changes
+
+- 15be50f: Fix default API endpoint
+
 ## 0.1.1
 
 ### Patch Changes
