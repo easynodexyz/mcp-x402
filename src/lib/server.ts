@@ -166,7 +166,7 @@ export const TOOLS = [
 export function createMcpServer(client: X402Client): McpServer {
   const mcpServer = new McpServer({
     name: 'easy-node-x402',
-    version: '0.2.0',
+    version: '0.1.0',
   });
 
   mcpServer.registerTool(
