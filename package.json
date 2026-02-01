@@ -42,7 +42,14 @@
     "model-context-protocol"
   ],
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/lib.js",
+  "types": "./dist/lib.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/lib.js",
+      "types": "./dist/lib.d.ts"
+    }
+  },
   "bin": {
     "mcp-x402": "./dist/index.js"
   },

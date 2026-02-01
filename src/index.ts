@@ -1,20 +1,11 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { runServer } from './server.js';
-import { runSetup } from './setup.js';
+import { runServer } from './lib/server.js';
+import { runSetup } from './lib/setup.js';
 
 // Library re-exports
-export { X402Client } from './client.js';
-export type { Product, Order, CreateOrderParams } from './client.js';
-
-export { loadConfig, getConfigPath, getConfigDir } from './config.js';
-export type { X402Config, ConfigValidationResult } from './config.js';
-
-export { createMcpServer, runServer } from './server.js';
-export { runHttpServer } from './http.js';
-
-export * from './tools/index.js';
+export * from './lib.js';
 
 const program = new Command();
 
@@ -37,7 +28,7 @@ program
   .option('-p, --port <number>', 'HTTP server port (http transport only)', '3402')
   .action(async (options: { transport: string; port: string }) => {
     if (options.transport === 'http') {
-      const { runHttpServer } = await import('./http.js');
+      const { runHttpServer } = await import('./lib/http.js');
       await runHttpServer(parseInt(options.port, 10));
     } else {
       await runServer();
