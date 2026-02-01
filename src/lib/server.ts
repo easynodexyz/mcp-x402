@@ -163,7 +163,22 @@ export const TOOLS = [
   },
 ];
 
-export function createMcpServer(client: X402Client): McpServer {
+const AUTH_ERROR = {
+  content: [
+    {
+      type: 'text' as const,
+      text: 'Error: Authentication required. Provide a valid wallet private key via X-Easynode-Private-Key header.',
+    },
+  ],
+  isError: true,
+};
+
+function requireClient(client: X402Client | null): X402Client {
+  if (!client) throw new Error('Authentication required');
+  return client;
+}
+
+export function createMcpServer(client: X402Client | null): McpServer {
   const mcpServer = new McpServer({
     name: 'easy-node-x402',
     version: '0.1.0',
@@ -177,9 +192,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await listProducts(client, params);
+        const result = await listProducts(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -194,9 +210,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await createOrder(client, params);
+        const result = await createOrder(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -211,9 +228,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await getOrder(client, params);
+        const result = await getOrder(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -228,9 +246,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async () => {
       try {
-        const result = await listInstances(client);
+        const result = await listInstances(requireClient(client));
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -245,9 +264,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await getInstance(client, params);
+        const result = await getInstance(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -262,9 +282,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await renewInstance(client, params);
+        const result = await renewInstance(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
@@ -279,9 +300,10 @@ export function createMcpServer(client: X402Client): McpServer {
     },
     async (params) => {
       try {
-        const result = await updateCustomName(client, params);
+        const result = await updateCustomName(requireClient(client), params);
         return { content: [{ type: 'text', text: result }] };
       } catch (error) {
+        if (!client) return AUTH_ERROR;
         const message = error instanceof Error ? error.message : 'Unknown error';
         return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }

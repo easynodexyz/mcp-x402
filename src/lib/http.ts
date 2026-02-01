@@ -17,20 +17,34 @@ export async function runHttpServer(port: number): Promise<void> {
   const apiUrl = process.env.EASYNODE_API_URL || DEFAULT_API_URL;
   const maxPayment = Number(process.env.EASYNODE_MAX_PAYMENT) || DEFAULT_MAX_PAYMENT;
 
+  const DISCOVERY_METHODS = ['initialize', 'notifications/initialized', 'tools/list'];
+
   // Stateless MCP endpoint
   app.post('/mcp', async (req, res) => {
-    const privateKey = req.headers['x-easynode-private-key'] as string;
+    const method = req.body?.method;
+    const isDiscovery = DISCOVERY_METHODS.includes(method);
+    const privateKey = (req.headers['X-Easynode-Private-Key'] ?? req.headers['x-easynode-private-key']) as string;
 
-    if (!privateKey || !isValidPrivateKey(privateKey)) {
-      res.status(400).json({ error: 'Missing or invalid X-Easynode-Private-Key header' });
-      return;
+    let client: X402Client | null = null;
+
+    if (!isDiscovery) {
+      if (!privateKey || !isValidPrivateKey(privateKey)) {
+        res.status(400).json({ error: 'Missing or invalid X-Easynode-Private-Key header' });
+        return;
+      }
+
+      client = new X402Client({
+        privateKey,
+        apiUrl,
+        maxPayment,
+      });
+    } else if (privateKey && isValidPrivateKey(privateKey)) {
+      client = new X402Client({
+        privateKey,
+        apiUrl,
+        maxPayment,
+      });
     }
-
-    const client = new X402Client({
-      privateKey,
-      apiUrl,
-      maxPayment,
-    });
 
     const server = createMcpServer(client);
     const transport = new StreamableHTTPServerTransport({
