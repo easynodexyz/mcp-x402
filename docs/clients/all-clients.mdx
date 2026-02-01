@@ -54,8 +54,8 @@ Your private key is sent via **HTTPS header** — encrypted in transit, never in
   <Tab title="Remote">
     ```bash
     claude mcp add --transport http \
-      --header "X-Easynode-Private-Key: 0x..." \
-      easy-node https://mcp-x402.easy-node.xyz/mcp
+      easy-node https://mcp-x402.easy-node.xyz/mcp \
+      --header "X-Easynode-Private-Key: 0x..."
     ```
   </Tab>
   <Tab title="Local">
