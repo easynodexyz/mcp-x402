@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { listProducts } from '../../src/tools/list-products.js';
-import type { X402Client, Product } from '../../src/client.js';
+import { listProducts } from '../../src/lib/tools/list-products.js';
+import type { X402Client, Product } from '../../src/lib/client.js';
 
 function mockClient(products: Product[]): X402Client {
   return {

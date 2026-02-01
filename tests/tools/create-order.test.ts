@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { createOrder } from '../../src/tools/create-order.js';
-import type { X402Client, Order } from '../../src/client.js';
+import { createOrder } from '../../src/lib/tools/create-order.js';
+import type { X402Client, Order } from '../../src/lib/client.js';
 
 function makeOrder(overrides: Partial<Order> = {}): Order {
   return {

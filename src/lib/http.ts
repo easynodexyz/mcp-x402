@@ -1,7 +1,8 @@
 import express from 'express';
+import { createRequire } from 'node:module';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { X402Client } from './client.js';
-import { createMcpServer } from './server.js';
+import { createMcpServer, TOOLS } from './server.js';
 
 const DEFAULT_API_URL = 'https://api.easy-node.xyz';
 const DEFAULT_MAX_PAYMENT = 100;
@@ -32,6 +33,24 @@ export async function runHttpServer(port: number): Promise<void> {
   // Smithery config schema endpoint
   app.get('/.well-known/mcp-config', (_req, res) => {
     res.json(CONFIG_SCHEMA);
+  });
+
+  // MCP server card for Smithery scanning
+  const require = createRequire(import.meta.url);
+  const { version } = require('../../package.json') as { version: string };
+
+  app.get('/.well-known/mcp/server-card.json', (_req, res) => {
+    res.json({
+      serverInfo: { name: 'easy-node-x402', version },
+      authentication: { required: true, schemes: ['custom-header'] },
+      tools: TOOLS.map((t) => ({
+        name: t.name,
+        description: t.description,
+        inputSchema: t.inputSchema,
+      })),
+      resources: [],
+      prompts: [],
+    });
   });
 
   // Stateless MCP endpoint

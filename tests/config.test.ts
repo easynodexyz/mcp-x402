@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { loadConfig, getConfigPath, getConfigDir } from '../src/config.js';
+import { loadConfig, getConfigPath, getConfigDir } from '../src/lib/config.js';
 
 vi.mock('dotenv', () => ({
   config: vi.fn(),

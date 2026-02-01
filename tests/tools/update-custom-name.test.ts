@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { updateCustomName } from '../../src/tools/update-custom-name.js';
-import type { X402Client } from '../../src/client.js';
+import { updateCustomName } from '../../src/lib/tools/update-custom-name.js';
+import type { X402Client } from '../../src/lib/client.js';
 
 function mockClient(): X402Client {
   return {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { renewInstance } from '../../src/tools/renew-instance.js';
-import type { X402Client, Order } from '../../src/client.js';
+import { renewInstance } from '../../src/lib/tools/renew-instance.js';
+import type { X402Client, Order } from '../../src/lib/client.js';
 
 function makeOrder(overrides: Partial<Order> = {}): Order {
   return {

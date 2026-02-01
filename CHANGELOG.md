@@ -1,5 +1,11 @@
 # @easynodexyz/mcp-x402
 
+## 0.1.1
+
+### Patch Changes
+
+- 7e8ca94: Fix library export
+
 ## 0.1.0
 
 ### Minor Changes

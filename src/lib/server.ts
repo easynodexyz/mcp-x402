@@ -1,17 +1,32 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { X402Client } from './client.js';
 import { loadConfig } from './config.js';
-import { createOrder, type CreateOrderParams } from './tools/create-order.js';
-import { getInstance, type GetInstanceParams } from './tools/get-instance.js';
-import { getOrder, type GetOrderParams } from './tools/get-order.js';
-import { listInstances } from './tools/list-instances.js';
-import { listProducts, type ListProductsParams } from './tools/list-products.js';
-import { renewInstance, type RenewInstanceParams } from './tools/renew-instance.js';
-import { updateCustomName, type UpdateCustomNameParams } from './tools/update-custom-name.js';
+import {
+  listProducts,
+  listProductsDescription,
+  listProductsSchema,
+  createOrder,
+  createOrderDescription,
+  createOrderSchema,
+  getOrder,
+  getOrderDescription,
+  getOrderSchema,
+  listInstances,
+  listInstancesDescription,
+  listInstancesSchema,
+  getInstance,
+  getInstanceDescription,
+  getInstanceSchema,
+  renewInstance,
+  renewInstanceDescription,
+  renewInstanceSchema,
+  updateCustomName,
+  updateCustomNameDescription,
+  updateCustomNameSchema,
+} from './tools/index.js';
 
-const TOOLS = [
+export const TOOLS = [
   {
     name: 'list_products',
     description:
@@ -148,101 +163,132 @@ const TOOLS = [
   },
 ];
 
-export function createMcpServer(client: X402Client): Server {
-  const server = new Server(
+export function createMcpServer(client: X402Client): McpServer {
+  const mcpServer = new McpServer({
+    name: 'easy-node-x402',
+    version: '0.1.0',
+  });
+
+  mcpServer.registerTool(
+    'list_products',
     {
-      name: 'easy-node-x402',
-      version: '0.0.1',
+      description: listProductsDescription,
+      inputSchema: listProductsSchema.shape,
     },
-    {
-      capabilities: {
-        tools: {},
-      },
+    async (params) => {
+      try {
+        const result = await listProducts(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
     }
   );
 
-  // List tools handler
-  server.setRequestHandler(ListToolsRequestSchema, async () => {
-    return { tools: TOOLS };
-  });
-
-  // Call tool handler
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    const { name, arguments: args } = request.params;
-
-    try {
-      switch (name) {
-        case 'list_products': {
-          const params = args as ListProductsParams;
-          const result = await listProducts(client, params);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'create_order': {
-          const params = args as CreateOrderParams;
-          if (!params.productId || !params.period) {
-            throw new Error('productId and period are required');
-          }
-          const result = await createOrder(client, {
-            productId: params.productId,
-            period: params.period,
-            quantity: params.quantity ?? 1,
-            customName: params.customName,
-          });
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'get_order': {
-          const params = args as GetOrderParams;
-          if (!params.orderId) {
-            throw new Error('orderId is required');
-          }
-          const result = await getOrder(client, params);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'list_instances': {
-          const result = await listInstances(client);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'get_instance': {
-          const params = args as GetInstanceParams;
-          if (!params.instanceId || !params.type) {
-            throw new Error('instanceId and type are required');
-          }
-          const result = await getInstance(client, params);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'renew_instance': {
-          const params = args as RenewInstanceParams;
-          if (!params.instanceId || !params.period || !params.type) {
-            throw new Error('instanceId, period, and type are required');
-          }
-          const result = await renewInstance(client, params);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        case 'update_custom_name': {
-          const params = args as UpdateCustomNameParams;
-          if (!params.instanceId || !params.type || !params.customName) {
-            throw new Error('instanceId, type, and customName are required');
-          }
-          const result = await updateCustomName(client, params);
-          return { content: [{ type: 'text', text: result }] };
-        }
-
-        default:
-          throw new Error(`Unknown tool: ${name}`);
+  mcpServer.registerTool(
+    'create_order',
+    {
+      description: createOrderDescription,
+      inputSchema: createOrderSchema.shape,
+    },
+    async (params) => {
+      try {
+        const result = await createOrder(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
       }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
     }
-  });
+  );
 
-  return server;
+  mcpServer.registerTool(
+    'get_order',
+    {
+      description: getOrderDescription,
+      inputSchema: getOrderSchema.shape,
+    },
+    async (params) => {
+      try {
+        const result = await getOrder(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
+    }
+  );
+
+  mcpServer.registerTool(
+    'list_instances',
+    {
+      description: listInstancesDescription,
+      inputSchema: listInstancesSchema.shape,
+    },
+    async () => {
+      try {
+        const result = await listInstances(client);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
+    }
+  );
+
+  mcpServer.registerTool(
+    'get_instance',
+    {
+      description: getInstanceDescription,
+      inputSchema: getInstanceSchema.shape,
+    },
+    async (params) => {
+      try {
+        const result = await getInstance(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
+    }
+  );
+
+  mcpServer.registerTool(
+    'renew_instance',
+    {
+      description: renewInstanceDescription,
+      inputSchema: renewInstanceSchema.shape,
+    },
+    async (params) => {
+      try {
+        const result = await renewInstance(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
+    }
+  );
+
+  mcpServer.registerTool(
+    'update_custom_name',
+    {
+      description: updateCustomNameDescription,
+      inputSchema: updateCustomNameSchema.shape,
+    },
+    async (params) => {
+      try {
+        const result = await updateCustomName(client, params);
+        return { content: [{ type: 'text', text: result }] };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
+        return { content: [{ type: 'text', text: `Error: ${message}` }], isError: true };
+      }
+    }
+  );
+
+  return mcpServer;
 }
 
 export async function runServer(): Promise<void> {

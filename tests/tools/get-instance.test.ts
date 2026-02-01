@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { getInstance } from '../../src/tools/get-instance.js';
-import type { X402Client, InstanceDetails, InstanceSecrets } from '../../src/client.js';
+import { getInstance } from '../../src/lib/tools/get-instance.js';
+import type { X402Client, InstanceDetails, InstanceSecrets } from '../../src/lib/client.js';
 
 function makeDetails(
   overrides: Partial<InstanceDetails & { secrets: InstanceSecrets | null }> = {}

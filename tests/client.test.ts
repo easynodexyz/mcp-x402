@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { X402Client } from '../src/client.js';
-import type { X402Config } from '../src/config.js';
+import { X402Client } from '../src/lib/client.js';
+import type { X402Config } from '../src/lib/config.js';
 
 const TEST_KEY = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 const TEST_ADDRESS = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';

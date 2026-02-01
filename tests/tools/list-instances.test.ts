@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { listInstances } from '../../src/tools/list-instances.js';
-import type { X402Client, InstanceListItem } from '../../src/client.js';
+import { listInstances } from '../../src/lib/tools/list-instances.js';
+import type { X402Client, InstanceListItem } from '../../src/lib/client.js';
 
 function makeInstance(overrides: Partial<InstanceListItem> = {}): InstanceListItem {
   return {
