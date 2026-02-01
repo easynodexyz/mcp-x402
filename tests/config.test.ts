@@ -55,7 +55,7 @@ describe('config', () => {
       const result = loadConfig();
 
       expect(result.valid).toBe(true);
-      expect(result.config!.apiUrl).toBe('https://api.easy-node.xyz');
+      expect(result.config!.apiUrl).toBe('https://api.easy-node.xyz/api');
       expect(result.config!.maxPayment).toBe(100);
     });
 

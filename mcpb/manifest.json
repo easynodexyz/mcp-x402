@@ -40,7 +40,7 @@
       "title": "API URL",
       "description": "Easy Node API base URL",
       "required": false,
-      "default": "https://api.easy-node.xyz"
+      "default": "https://api.easy-node.xyz/api"
     },
     "EASYNODE_MAX_PAYMENT": {
       "type": "string",

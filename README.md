@@ -191,11 +191,11 @@ Ask your AI assistant:
 
 ### Environment Variables
 
-| Variable               | Required | Default                   | Description                |
-| ---------------------- | -------- | ------------------------- | -------------------------- |
-| `EASYNODE_PRIVATE_KEY` | Yes      | -                         | Wallet private key (0x...) |
-| `EASYNODE_API_URL`     | No       | https://api.easy-node.xyz | API base URL               |
-| `EASYNODE_MAX_PAYMENT` | No       | 100                       | Max USDC per transaction   |
+| Variable               | Required | Default                       | Description                |
+| ---------------------- | -------- |-------------------------------| -------------------------- |
+| `EASYNODE_PRIVATE_KEY` | Yes      | -                             | Wallet private key (0x...) |
+| `EASYNODE_API_URL`     | No       | https://api.easy-node.xyz/api | API base URL               |
+| `EASYNODE_MAX_PAYMENT` | No       | 100                           | Max USDC per transaction   |
 
 ### Config Resolution Order
 
@@ -231,7 +231,7 @@ Create `~/.easy-node/.env`:
 
 ```
 EASYNODE_PRIVATE_KEY=0x...
-EASYNODE_API_URL=https://api.easy-node.xyz
+EASYNODE_API_URL=https://api.easy-node.xyz/api
 EASYNODE_MAX_PAYMENT=1000
 ```
 

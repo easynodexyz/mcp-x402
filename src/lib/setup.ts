@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { createInterface } from 'readline';
 import { getConfigDir, getConfigPath } from './config.js';
 
-const DEFAULT_API_URL = 'https://api.easy-node.xyz';
+const DEFAULT_API_URL = 'https://api.easy-node.xyz/api';
 const DEFAULT_MAX_PAYMENT = '100';
 
 interface SetupAnswers {

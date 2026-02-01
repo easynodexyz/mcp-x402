@@ -3,7 +3,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import { X402Client } from './client.js';
 import { createMcpServer } from './server.js';
 
-const DEFAULT_API_URL = 'https://api.easy-node.xyz';
+const DEFAULT_API_URL = 'https://api.easy-node.xyz/api';
 const DEFAULT_MAX_PAYMENT = 100;
 
 function isValidPrivateKey(key: string): key is `0x${string}` {

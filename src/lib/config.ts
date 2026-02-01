@@ -15,7 +15,7 @@ export interface ConfigValidationResult {
   errors: string[];
 }
 
-const DEFAULT_API_URL = 'https://api.easy-node.xyz';
+const DEFAULT_API_URL = 'https://api.easy-node.xyz/api';
 const DEFAULT_MAX_PAYMENT = 100;
 
 /**
