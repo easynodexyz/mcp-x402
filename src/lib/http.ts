@@ -23,7 +23,8 @@ export async function runHttpServer(port: number): Promise<void> {
   app.post('/mcp', async (req, res) => {
     const method = req.body?.method;
     const isDiscovery = DISCOVERY_METHODS.includes(method);
-    const privateKey = (req.headers['X-Easynode-Private-Key'] ?? req.headers['x-easynode-private-key']) as string;
+    const privateKey = (req.headers['X-Easynode-Private-Key'] ??
+      req.headers['x-easynode-private-key']) as string;
 
     let client: X402Client | null = null;
 

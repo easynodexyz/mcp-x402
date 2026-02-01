@@ -1,13 +1,25 @@
 {
-  "name": "mcp-x402",
-  "displayName": "Easy Node x402",
-  "description": "AI agent tools for purchasing and managing VPS/blockchain nodes with USDC payments on Base",
+  "name": "easynode-marketplace",
+  "owner": {
+    "name": "Easy Node",
+    "email": "dev@easy-node.xyz"
+  },
   "plugins": [
     {
-      "name": "Easy Node x402",
-      "path": ".",
+      "name": "easynode-x402-plugin",
+      "source": "./plugins/claude/easynode-x402",
       "description": "Purchase VPS and blockchain nodes with USDC via x402 payments",
-      "keywords": ["mcp", "x402", "vps", "blockchain", "usdc", "base", "payments"]
+      "version": "0.1.2",
+      "author": {
+        "name": "Easy Node",
+        "email": "dev@easy-node.xyz"
+      },
+      "homepage": "https://github.com/easynodexyz/mcp-x402#readme",
+      "repository": "https://github.com/easynodexyz/mcp-x402",
+      "license": "BUSL-1.1",
+      "keywords": ["mcp", "x402", "vps", "blockchain", "usdc", "base", "payments"],
+      "category": "cloud-infrastructure",
+      "tags": ["mcp-server", "crypto", "vps", "nodes"]
     }
   ]
 }

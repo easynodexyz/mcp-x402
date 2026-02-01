@@ -15,6 +15,10 @@ description: "Environment variables and configuration options"
 
 ## Config Resolution Order
 
+<Note>
+This resolution order applies to the **local stdio server** only (`npx @easynodexyz/mcp-x402`). If you're using the [Claude Code plugin](/clients/claude-code#easynode-x402-plugin) or [remote server](/clients/claude-code#remote-server), configuration is passed via HTTP headers from your system environment variables — the `.env` files below are not read.
+</Note>
+
 Configuration is loaded from multiple sources. Later sources override earlier ones:
 
 1. `~/.easy-node/.env` — Global config (lowest priority)

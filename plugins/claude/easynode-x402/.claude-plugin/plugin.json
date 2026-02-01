@@ -1,0 +1,9 @@
+{
+  "name": "easynode-x402-plugin",
+  "description": "Purchase VPS and blockchain nodes on EasyNode with USDC via x402 payments",
+  "version": "0.1.2",
+  "author": {
+    "name": "Easy Node",
+    "email": "dev@easy-node.xyz"
+  }
+}

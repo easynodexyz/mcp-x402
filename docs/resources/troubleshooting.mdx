@@ -9,10 +9,30 @@ description: "Common issues and solutions"
 
 The server cannot find your wallet private key.
 
-**Solutions:**
+**For the local stdio server:**
 - Run `npx @easynodexyz/mcp-x402 setup` to configure interactively
 - Set the `EASYNODE_PRIVATE_KEY` environment variable in your IDE config
 - Create `~/.easy-node/.env` with `EASYNODE_PRIVATE_KEY=0x...`
+
+**For the Claude Code plugin (remote server):**
+The plugin does not read `~/.easy-node/.env`. You must set `EASYNODE_PRIVATE_KEY` as a system environment variable so Claude Code can pass it to the remote server.
+
+```bash
+# macOS/Linux — add to ~/.bashrc or ~/.zshrc
+export EASYNODE_PRIVATE_KEY=0x...
+```
+
+```powershell
+# Windows PowerShell
+[Environment]::SetEnvironmentVariable("EASYNODE_PRIVATE_KEY", "0x...", "User")
+```
+
+```cmd
+# Windows CMD
+setx EASYNODE_PRIVATE_KEY "0x..."
+```
+
+Restart Claude Code after setting the variable.
 
 ## "Payment amount exceeds maximum"
 

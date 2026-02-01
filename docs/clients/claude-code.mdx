@@ -5,7 +5,67 @@ description: "Configure MCP x402 with Claude Code CLI"
 
 # Claude Code
 
-## Remote Server
+## EasyNode X402 Plugin
+
+The EasyNode X402 plugin provides an MCP server with 7 tools for browsing VPS and blockchain node products, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials.
+
+### Installing the Plugin
+
+```bash
+/plugin marketplace add easynodexyz/mcp-x402
+/plugin install easynode-x402-plugin@easynode-marketplace
+```
+
+### Setup
+
+The plugin requires `EASYNODE_PRIVATE_KEY` as a **system environment variable**. Claude Code passes it to the remote server via HTTP header — it does not read `~/.easy-node/.env`.
+
+Add to your shell profile (`~/.bashrc`, `~/.zshrc`, or `~/.profile`):
+
+```bash
+export EASYNODE_PRIVATE_KEY=0x...
+```
+
+On Windows, set it via PowerShell or CMD:
+
+```powershell
+# PowerShell
+[Environment]::SetEnvironmentVariable("EASYNODE_PRIVATE_KEY", "0x...", "User")
+```
+
+```cmd
+# CMD
+setx EASYNODE_PRIVATE_KEY "0x..."
+```
+
+Restart Claude Code after setting the variable.
+
+<Note>
+The `~/.easy-node/.env` config file is only used by the [local stdio server](#local-server). The plugin uses the remote server.
+</Note>
+
+### Configuration
+
+| Variable               | Required | Default | Description                  |
+|------------------------|----------|---------|------------------------------|
+| `EASYNODE_PRIVATE_KEY` |    Yes   |    —    | Wallet private key (`0x...`) |
+| `EASYNODE_MAX_PAYMENT` |    No    |  `100`  | Max USDC per transaction     |
+
+### Available Tools
+
+| Tool                  | Description                                       |
+|-----------------------|---------------------------------------------------|
+| `list_products`       | Browse available VPS and blockchain node products |
+| `create_order`        | Purchase a product with USDC via x402 payment     |
+| `get_order`           | Check order status and delivery progress          |
+| `list_instances`      | List all active instances                         |
+| `get_instance`        | View instance details                             |
+| `renew_instance`      | Renew an existing instance                        |
+| `update_custom_name`  | Rename an instance                                |
+
+## Manual Setup
+
+### Remote Server
 
 Connect to the hosted server — no local install needed:
 
@@ -15,7 +75,7 @@ claude mcp add --transport http \
   --header "X-Easynode-Private-Key: 0x..."
 ```
 
-## Local Server
+### Local Server
 
 Run the MCP server locally via npx:
 
@@ -36,7 +96,7 @@ Or add manually to `~/.claude/settings.json`:
 }
 ```
 
-## Config File Locations
+### Config File Locations
 
 | OS | Path |
 |----|------|
