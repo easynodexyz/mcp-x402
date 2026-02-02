@@ -1,5 +1,11 @@
 # @easynodexyz/mcp-x402
 
+## 0.1.3
+
+### Patch Changes
+
+- 0e6ebc7: Discovery methods (initialize, notifications/initialized, tools/list) no longer require the X-Easynode-Private-Key header
+
 ## 0.1.2
 
 ### Patch Changes
