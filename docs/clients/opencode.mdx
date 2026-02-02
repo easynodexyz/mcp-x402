@@ -1,18 +1,39 @@
 ---
 title: "OpenCode"
-description: "Configure MCP x402 with OpenCode"
+sidebarTitle: "OpenCode"
 ---
 
-# OpenCode
+EasyNode x402 gives [OpenCode](https://opencode.ai/) tools for browsing VPS and blockchain node products on EasyNode, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials — all from your terminal.
 
-## Remote Server
+<Info>
+For more details on MCP server configuration in OpenCode, see the [OpenCode MCP documentation](https://opencode.ai/docs/mcp-servers/).
+</Info>
 
-Add to your `opencode.json`:
+## Installation
+
+<Tabs>
+<Tab title="Remote (Recommended)" icon="cloud">
+No local dependencies required. Connects to EasyNode's hosted MCP server.
+
+<Steps>
+<Step title="Open your OpenCode config">
+Create or edit `opencode.json` in your project root, or `~/.config/opencode/opencode.json` for global config. See the [OpenCode config docs](https://opencode.ai/docs/config/) for more details.
+
+```bash
+# Global config
+vim ~/.config/opencode/opencode.json
+
+# Or project level config
+vim opencode.json
+```
+</Step>
+<Step title="Add EasyNode MCP server">
+Add the EasyNode x402 MCP server to the `mcp` section:
 
 ```json
 {
   "mcp": {
-    "easy-node": {
+    "easynode-x402": {
       "type": "remote",
       "url": "https://mcp-x402.easy-node.xyz/mcp",
       "headers": {
@@ -24,12 +45,36 @@ Add to your `opencode.json`:
 }
 ```
 
-## Local Server
+Replace `0x...` with your wallet private key.
+</Step>
+</Steps>
+</Tab>
+<Tab title="Local" icon="computer">
+Runs on your machine. Requires Node.js 20+.
+
+<Tip>
+    Run `npx @easynodexyz/mcp-x402 setup` first to configure env variables
+</Tip>
+
+<Steps>
+<Step title="Open your OpenCode config">
+Create or edit `opencode.json` in your project root, or `~/.config/opencode/opencode.json` for global config.
+
+```bash
+# Global config
+vim ~/.config/opencode/opencode.json
+
+# Or project level config
+vim opencode.json
+```
+</Step>
+<Step title="Add EasyNode MCP server">
+Add the EasyNode x402 MCP server to the `mcp` section:
 
 ```json
 {
   "mcp": {
-    "easy-node": {
+    "easynode-x402": {
       "type": "local",
       "command": ["npx", "-y", "@easynodexyz/mcp-x402"],
       "enabled": true
@@ -37,7 +82,48 @@ Add to your `opencode.json`:
   }
 }
 ```
+</Step>
+</Steps>
+</Tab>
+</Tabs>
 
-## After Configuration
+### Verifying the Connection
 
 Restart OpenCode to load the MCP server.
+
+## Using EasyNode x402
+
+Once connected, you can ask the agent to use EasyNode tools directly:
+
+```
+> List available VPS products
+
+> Purchase a 1-month VPS-S1 plan
+
+> Show me my active instances
+
+> What are the connection details for instance abc123?
+
+> Renew my VPS instance for 3 months
+```
+
+### Configuration
+
+| Variable               | Required | Default | Description                  |
+|------------------------|----------|---------|------------------------------|
+| `EASYNODE_PRIVATE_KEY` |    Yes   |    —    | Wallet private key (`0x...`) |
+| `EASYNODE_MAX_PAYMENT` |    No    |  `100`  | Max USDC per transaction     |
+
+Run `npx @easynodexyz/mcp-x402 setup` to store your key in `~/.easy-node/.env` instead of setting system environment variables. Environment variables override values in `~/.easy-node/.env`.
+
+### Available Tools
+
+| Tool                  | Description                                       |
+|-----------------------|---------------------------------------------------|
+| `list_products`       | Browse available VPS and blockchain node products |
+| `create_order`        | Purchase a product with USDC via x402 payment     |
+| `get_order`           | Check order status and delivery progress          |
+| `list_instances`      | List all active instances                         |
+| `get_instance`        | View instance details and credentials             |
+| `renew_instance`      | Renew an existing instance subscription           |
+| `update_custom_name`  | Rename an instance                                |

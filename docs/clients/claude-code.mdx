@@ -1,48 +1,90 @@
 ---
 title: "Claude Code"
-description: "Configure MCP x402 with Claude Code CLI"
+sidebarTitle: "Claude Code"
 ---
 
-# Claude Code
+EasyNode x402 gives Claude Code tools for browsing VPS and blockchain node products on EasyNode, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials — all from your terminal.
 
-## EasyNode X402 Plugin
+## Installation
 
-The EasyNode X402 plugin provides an MCP server with 7 tools for browsing VPS and blockchain node products, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials.
+<Tabs>
+<Tab title="Remote (Recommended)" icon="cloud">
+Connect to the hosted MCP server — no local install or Node.js needed:
+
+```bash
+claude mcp add --transport http easynode-x402 https://mcp-x402.easy-node.xyz/mcp --header "X-Easynode-Private-Key: 0x..."
+```
+
+Replace `0x...` with your wallet private key.
+</Tab>
+<Tab title="Local" icon="computer">
+Run the MCP server locally via npx (requires Node.js 20+):
+
+<Tip>
+    Run `npx @easynodexyz/mcp-x402 setup` first to configure env variables
+</Tip>
+
+```bash
+claude mcp add easynode-x402 -- npx -y @easynodexyz/mcp-x402
+```
+
+Or add manually to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "easynode-x402": {
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
+    }
+  }
+}
+```
+</Tab>
+</Tabs>
+
+### Verifying the Connection
+
+After adding the server, verify it's connected:
+
+```bash
+claude mcp list
+```
+
+You should see `easynode-x402` listed with its tools.
+
+## Using EasyNode x402
+
+Once connected, you can ask Claude to use EasyNode tools directly:
+
+```
+> List available VPS products
+
+> Purchase a 1-month VPS-S1 plan
+
+> Show me my active instances
+
+> What are the connection details for instance abc123?
+
+> Renew my VPS instance for 3 months
+```
+
+## The EasyNode x402 Plugin
+
+<CardGroup cols={1}>
+<Card title="MCP Server" icon="server" href="https://www.npmjs.com/package/@easynodexyz/mcp-x402">
+  7 tools for VPS and blockchain node management via x402 payments
+</Card>
+</CardGroup>
 
 ### Installing the Plugin
+
+If you prefer using the Claude Code plugin system instead of `claude mcp add`:
 
 ```bash
 /plugin marketplace add easynodexyz/mcp-x402
 /plugin install easynode-x402-plugin@easynode-marketplace
 ```
-
-### Setup
-
-The plugin requires `EASYNODE_PRIVATE_KEY` as a **system environment variable**. Claude Code passes it to the remote server via HTTP header — it does not read `~/.easy-node/.env`.
-
-Add to your shell profile (`~/.bashrc`, `~/.zshrc`, or `~/.profile`):
-
-```bash
-export EASYNODE_PRIVATE_KEY=0x...
-```
-
-On Windows, set it via PowerShell or CMD:
-
-```powershell
-# PowerShell
-[Environment]::SetEnvironmentVariable("EASYNODE_PRIVATE_KEY", "0x...", "User")
-```
-
-```cmd
-# CMD
-setx EASYNODE_PRIVATE_KEY "0x..."
-```
-
-Restart Claude Code after setting the variable.
-
-<Note>
-The `~/.easy-node/.env` config file is only used by the [local stdio server](#local-server). The plugin uses the remote server.
-</Note>
 
 ### Configuration
 
@@ -50,6 +92,8 @@ The `~/.easy-node/.env` config file is only used by the [local stdio server](#lo
 |------------------------|----------|---------|------------------------------|
 | `EASYNODE_PRIVATE_KEY` |    Yes   |    —    | Wallet private key (`0x...`) |
 | `EASYNODE_MAX_PAYMENT` |    No    |  `100`  | Max USDC per transaction     |
+
+Run `npx @easynodexyz/mcp-x402 setup` to store your key in `~/.easy-node/.env` instead of setting system environment variables. Environment variables override values in `~/.easy-node/.env`.
 
 ### Available Tools
 
@@ -59,46 +103,6 @@ The `~/.easy-node/.env` config file is only used by the [local stdio server](#lo
 | `create_order`        | Purchase a product with USDC via x402 payment     |
 | `get_order`           | Check order status and delivery progress          |
 | `list_instances`      | List all active instances                         |
-| `get_instance`        | View instance details                             |
-| `renew_instance`      | Renew an existing instance                        |
+| `get_instance`        | View instance details and credentials             |
+| `renew_instance`      | Renew an existing instance subscription           |
 | `update_custom_name`  | Rename an instance                                |
-
-## Manual Setup
-
-### Remote Server
-
-Connect to the hosted server — no local install needed:
-
-```bash
-claude mcp add --transport http \
-  easy-node https://mcp-x402.easy-node.xyz/mcp \
-  --header "X-Easynode-Private-Key: 0x..."
-```
-
-### Local Server
-
-Run the MCP server locally via npx:
-
-```bash
-claude mcp add easy-node -- npx -y @easynodexyz/mcp-x402
-```
-
-Or add manually to `~/.claude/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "easy-node": {
-      "command": "npx",
-      "args": ["-y", "@easynodexyz/mcp-x402"]
-    }
-  }
-}
-```
-
-### Config File Locations
-
-| OS | Path |
-|----|------|
-| macOS/Linux | `~/.claude/settings.json` |
-| Windows | `%USERPROFILE%\.claude\settings.json` |

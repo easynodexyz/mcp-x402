@@ -1,11 +1,9 @@
 {
   "mcpServers": {
     "easynode-x402": {
-      "type": "http",
-      "url": "https://mcp-x402.easy-node.xyz/mcp",
-      "headers": {
-        "X-Easynode-Private-Key": "${EASYNODE_PRIVATE_KEY}"
-      }
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@easynodexyz/mcp-x402"]
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "Easy Node MCP x402",
+  "name": "Easy Node x402 MCP",
   "description": "MCP server for AI agents to purchase VPS and blockchain nodes with USDC",
   "theme": "mint",
   "colors": {
@@ -8,9 +8,18 @@
     "light": "#EEF2FF",
     "dark": "#312E81"
   },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
+  },
   "logo": {
     "light": "/public/logo/logo.svg",
-    "dark": "/public/logo/logo-dark.svg"
+    "dark": "/public/logo/logo-dark.svg",
+    "href": "https://x402.easy-node.xyz"
   },
   "favicon": "/public/favicon.ico",
   "navigation": {
@@ -23,12 +32,11 @@
             "pages": ["overview", "installation", "configuration"]
           },
           {
-            "group": "IDE Clients",
+            "group": "Clients",
             "pages": [
               "clients/claude-code",
               "clients/cursor",
               "clients/opencode",
-              "clients/claude-desktop",
               "clients/vscode-continue",
               "clients/all-clients"
             ]
@@ -57,18 +65,60 @@
       }
     ]
   },
-  "footerSocials": {
-    "x": "https://x.com/easynodexyz",
-    "github": "https://github.com/easynodexyz/mcp-x402"
-  },
-  "topbarLinks": [
-    {
-      "name": "GitHub",
-      "url": "https://github.com/easynodexyz/mcp-x402"
+  "navbar": {
+    "links": [
+      {
+        "label": "Contact",
+        "href": "https://discord.gg/4zfzTKqrfU"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/easynodexyz/mcp-x402"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Marketplace",
+      "href": "https://app.easy-node.xyz"
     }
-  ],
-  "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://easy-node.xyz"
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/easynodexyz",
+      "github": "https://github.com/easynodexyz/mcp-x402",
+      "discord": "https://discord.gg/4zfzTKqrfU"
+    },
+    "links": [
+      {
+        "header": "Resources",
+        "items": [
+          {
+            "label": "Website",
+            "href": "https://easy-node.xyz"
+          },
+          {
+            "label": "Marketplace",
+            "href": "https://app.easy-node.xyz"
+          }
+        ]
+      },
+      {
+        "header": "Community",
+        "items": [
+          {
+            "label": "GitHub",
+            "href": "https://github.com/easynodexyz/mcp-x402"
+          },
+          {
+            "label": "Discord",
+            "href": "https://discord.gg/4zfzTKqrfU"
+          },
+          {
+            "label": "Twitter",
+            "href": "https://x.com/easynodexyz"
+          }
+        ]
+      }
+    ]
   }
 }

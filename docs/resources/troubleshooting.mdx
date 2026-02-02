@@ -1,9 +1,9 @@
 ---
 title: "Troubleshooting"
-description: "Common issues and solutions"
+sidebarTitle: "Troubleshooting"
 ---
 
-# Troubleshooting
+Common issues and solutions
 
 ## "EASYNODE_PRIVATE_KEY is required"
 
@@ -14,8 +14,8 @@ The server cannot find your wallet private key.
 - Set the `EASYNODE_PRIVATE_KEY` environment variable in your IDE config
 - Create `~/.easy-node/.env` with `EASYNODE_PRIVATE_KEY=0x...`
 
-**For the Claude Code plugin (remote server):**
-The plugin does not read `~/.easy-node/.env`. You must set `EASYNODE_PRIVATE_KEY` as a system environment variable so Claude Code can pass it to the remote server.
+**For the remote server:**
+The plugin does not read `~/.easy-node/.env`. You must set `EASYNODE_PRIVATE_KEY` as a system environment variable so it can pass it to the remote server.
 
 ```bash
 # macOS/Linux — add to ~/.bashrc or ~/.zshrc
@@ -32,7 +32,7 @@ export EASYNODE_PRIVATE_KEY=0x...
 setx EASYNODE_PRIVATE_KEY "0x..."
 ```
 
-Restart Claude Code after setting the variable.
+Restart your bash/IDE after setting the variable.
 
 ## "Payment amount exceeds maximum"
 

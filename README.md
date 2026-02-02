@@ -58,7 +58,7 @@ Add to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "@easynodexyz/mcp-x402": {
+    "easynode-x402": {
       "command": "npx",
       "args": ["@easynodexyz/mcp-x402"]
     }
@@ -87,7 +87,7 @@ Or manually add to your Claude Code settings (`~/.claude/settings.json`):
 ```json
 {
   "mcpServers": {
-    "easy-node": {
+    "easynode-x402": {
       "command": "npx",
       "args": ["@easynodexyz/mcp-x402"]
     }
@@ -109,7 +109,7 @@ Add to your Cursor settings (`.cursor/mcp.json` in your project or global config
 ```json
 {
   "mcpServers": {
-    "@easynodexyz/mcp-x402": {
+    "easynode-x402": {
       "command": "npx",
       "args": ["@easynodexyz/mcp-x402"]
     }
@@ -214,7 +214,7 @@ Instead of running setup, you can configure manually:
 ```json
 {
   "mcpServers": {
-    "easy-node": {
+    "easynode-x402": {
       "command": "npx",
       "args": ["@easynodexyz/mcp-x402"],
       "env": {

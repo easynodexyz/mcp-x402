@@ -1,15 +1,19 @@
 ---
 title: "VS Code + Continue"
-description: "Configure MCP x402 with VS Code and Continue extension"
+sidebarTitle: "VS Code + Continue"
 ---
 
-# VS Code + Continue
+EasyNode x402 gives VS Code + Continue tools for browsing VPS and blockchain node products on EasyNode, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials — all from your editor.
 
 <Note>
 Continue supports **local MCP servers only**. For remote server access, use [VS Code Copilot](/clients/all-clients) or another client with remote support.
 </Note>
 
-## Local Server
+## Installation
+
+<Tip>
+    Run `npx @easynodexyz/mcp-x402 setup` first to configure env variables
+</Tip>
 
 Add to your Continue configuration (`~/.continue/config.json`):
 
@@ -29,6 +33,43 @@ Add to your Continue configuration (`~/.continue/config.json`):
 }
 ```
 
-## After Configuration
+### Verifying the Connection
 
 Restart VS Code to load the MCP server through Continue.
+
+## Using EasyNode x402
+
+Once connected, you can ask the agent to use EasyNode tools directly:
+
+```
+> List available VPS products
+
+> Purchase a 1-month VPS-S1 plan
+
+> Show me my active instances
+
+> What are the connection details for instance abc123?
+
+> Renew my VPS instance for 3 months
+```
+
+### Configuration
+
+| Variable               | Required | Default | Description                  |
+|------------------------|----------|---------|------------------------------|
+| `EASYNODE_PRIVATE_KEY` |    Yes   |    —    | Wallet private key (`0x...`) |
+| `EASYNODE_MAX_PAYMENT` |    No    |  `100`  | Max USDC per transaction     |
+
+Run `npx @easynodexyz/mcp-x402 setup` to store your key in `~/.easy-node/.env` instead of setting system environment variables. Environment variables override values in `~/.easy-node/.env`.
+
+### Available Tools
+
+| Tool                  | Description                                       |
+|-----------------------|---------------------------------------------------|
+| `list_products`       | Browse available VPS and blockchain node products |
+| `create_order`        | Purchase a product with USDC via x402 payment     |
+| `get_order`           | Check order status and delivery progress          |
+| `list_instances`      | List all active instances                         |
+| `get_instance`        | View instance details and credentials             |
+| `renew_instance`      | Renew an existing instance subscription           |
+| `update_custom_name`  | Rename an instance                                |

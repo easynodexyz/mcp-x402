@@ -1,18 +1,20 @@
 ---
 title: "Cursor"
-description: "Configure MCP x402 with Cursor IDE"
+sidebarTitle: "Cursor"
 ---
 
-# Cursor
+EasyNode x402 gives Cursor tools for browsing VPS and blockchain node products on EasyNode, purchasing with USDC on Base via x402 payments, managing instances, and decrypting credentials — all from your editor.
 
-## Remote Server
+## Installation
 
+<Tabs>
+<Tab title="Remote (Recommended)" icon="cloud">
 Add to your Cursor MCP settings (`.cursor/mcp.json`):
 
 ```json
 {
   "mcpServers": {
-    "easy-node": {
+    "easynode-x402": {
       "url": "https://mcp-x402.easy-node.xyz/mcp",
       "headers": {
         "X-Easynode-Private-Key": "0x..."
@@ -22,20 +24,29 @@ Add to your Cursor MCP settings (`.cursor/mcp.json`):
 }
 ```
 
-## Local Server
+Replace `0x...` with your wallet private key.
+</Tab>
+<Tab title="Local" icon="computer">
 
+<Tip>
+    Run `npx @easynodexyz/mcp-x402 setup` first to configure env variables
+</Tip>
+
+`.cursor/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "easy-node": {
+    "easynode-x402": {
       "command": "npx",
       "args": ["-y", "@easynodexyz/mcp-x402"]
     }
   }
 }
 ```
+</Tab>
+</Tabs>
 
-## Config File Locations
+### Config File Locations
 
 | Scope | Path |
 |-------|------|
@@ -43,6 +54,43 @@ Add to your Cursor MCP settings (`.cursor/mcp.json`):
 | Global (macOS) | `~/.cursor/mcp.json` |
 | Global (Windows) | `%USERPROFILE%\.cursor\mcp.json` |
 
-## After Configuration
+### Verifying the Connection
 
 Restart Cursor to load the MCP server.
+
+## Using EasyNode x402
+
+Once connected, you can ask the agent to use EasyNode tools directly:
+
+```
+> List available VPS products
+
+> Purchase a 1-month VPS-S1 plan
+
+> Show me my active instances
+
+> What are the connection details for instance abc123?
+
+> Renew my VPS instance for 3 months
+```
+
+### Configuration
+
+| Variable               | Required | Default | Description                  |
+|------------------------|----------|---------|------------------------------|
+| `EASYNODE_PRIVATE_KEY` |    Yes   |    —    | Wallet private key (`0x...`) |
+| `EASYNODE_MAX_PAYMENT` |    No    |  `100`  | Max USDC per transaction     |
+
+Run `npx @easynodexyz/mcp-x402 setup` to store your key in `~/.easy-node/.env` instead of setting system environment variables. Environment variables override values in `~/.easy-node/.env`.
+
+### Available Tools
+
+| Tool                  | Description                                       |
+|-----------------------|---------------------------------------------------|
+| `list_products`       | Browse available VPS and blockchain node products |
+| `create_order`        | Purchase a product with USDC via x402 payment     |
+| `get_order`           | Check order status and delivery progress          |
+| `list_instances`      | List all active instances                         |
+| `get_instance`        | View instance details and credentials             |
+| `renew_instance`      | Renew an existing instance subscription           |
+| `update_custom_name`  | Rename an instance                                |
