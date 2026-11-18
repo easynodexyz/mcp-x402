@@ -39,13 +39,17 @@ jobs:
             '.version = $v | .packages[0].version = $v' \
             server.json > server.tmp.json && mv server.tmp.json server.json
 
-      - name: Validate server.json
-        run: npx mcp-registry-validator validate server.json
-
       - name: Install mcp-publisher
+        env:
+          MCP_PUBLISHER_VERSION: v1.8.9
+          MCP_PUBLISHER_SHA256: 4d527ca8f1ced0394c962dc925c2a4a4addef441cbefd62501c875e9481823a8
         run: |
-          curl -sL https://github.com/nichochar/mcp-publisher/releases/latest/download/mcp-publisher-linux-amd64 -o mcp-publisher
-          chmod +x mcp-publisher
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/mcp-publisher_linux_amd64.tar.gz" -o mcp-publisher.tar.gz
+          echo "${MCP_PUBLISHER_SHA256}  mcp-publisher.tar.gz" | sha256sum -c -
+          tar xzf mcp-publisher.tar.gz mcp-publisher
+
+      - name: Validate server.json
+        run: ./mcp-publisher validate server.json
 
       - name: Authenticate via GitHub OIDC
         run: ./mcp-publisher login github-oidc
