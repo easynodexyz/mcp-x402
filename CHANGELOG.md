@@ -1,5 +1,12 @@
 # @easynodexyz/mcp-x402
 
+## 0.1.4
+
+### Patch Changes
+
+- 3e0b031: Restrict `create_order` period to 1, 3 or 6 months to match the API validation.
+- b7bb228: `list_products` shows each period as `N month(s): $X.XX total ($Y.YY/month)` and replaces every `{br}` marker in product texts.
+
 ## 0.1.3
 
 ### Patch Changes
