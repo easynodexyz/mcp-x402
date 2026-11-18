@@ -63,3 +63,43 @@ describe('createOrderSchema', () => {
     expect(createOrderSchema.safeParse({ productId: 'p1', period }).success).toBe(false);
   });
 });
+
+describe('createOrder region and add-ons', () => {
+  it('sends the region and add-ons to the API', async () => {
+    const client = mockClient(makeOrder());
+
+    await createOrder(client, {
+      productId: 'p1',
+      period: 1,
+      quantity: 1,
+      region: 'US-EAST',
+      addOns: ['openclaw'],
+    });
+
+    expect(client.createOrder).toHaveBeenCalledWith(
+      expect.objectContaining({ region: 'US-EAST', addOns: ['openclaw'] })
+    );
+  });
+
+  it('accepts a known region and an add-on list', () => {
+    expect(
+      createOrderSchema.safeParse({
+        productId: 'p1',
+        period: 1,
+        region: 'JPN',
+        addOns: ['openclaw'],
+      }).success
+    ).toBe(true);
+  });
+
+  it('rejects an unknown region', () => {
+    expect(
+      createOrderSchema.safeParse({ productId: 'p1', period: 1, region: 'MARS' }).success
+    ).toBe(false);
+  });
+
+  it('rejects more than 10 add-ons', () => {
+    const addOns = Array.from({ length: 11 }, (_, i) => `addon-${i}`);
+    expect(createOrderSchema.safeParse({ productId: 'p1', period: 1, addOns }).success).toBe(false);
+  });
+});

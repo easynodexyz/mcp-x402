@@ -17,12 +17,23 @@ export const createOrderSchema = z.object({
     .max(100)
     .optional()
     .describe('Custom name for the instance (max 100 characters)'),
+  region: z
+    .enum(['EU', 'US-CENTRAL', 'US-EAST', 'US-WEST', 'UK', 'JPN', 'IND', 'AUS'])
+    .optional()
+    .describe('Region code from the product regions in list_products (default: EU)'),
+  addOns: z
+    .array(z.string())
+    .max(10)
+    .optional()
+    .describe(
+      'VPS only: add-on ids from the product addOns in list_products, at most one per type'
+    ),
 });
 
 export type CreateOrderParams = z.infer<typeof createOrderSchema>;
 
 export const createOrderDescription =
-  'Purchase a VPS or blockchain node product using USDC on Base. Handles the x402 payment flow automatically. Returns order details with ID and status.';
+  'Purchase a VPS or blockchain node product using USDC on Base, optionally in a given region and with add-ons from list_products. Handles the x402 payment flow automatically. Returns order details with ID and status.';
 
 function formatOrder(order: Order): string {
   const lines: string[] = [
@@ -64,6 +75,8 @@ export async function createOrder(client: X402Client, params: CreateOrderParams)
     period: params.period,
     quantity: params.quantity,
     customName: params.customName,
+    region: params.region,
+    addOns: params.addOns,
   });
 
   return formatOrder(order);

@@ -261,11 +261,16 @@ Purchase a product using USDC on Base. Handles x402 payment automatically.
 - `period` (required): Subscription period in months: `1`, `3` or `6`
 - `quantity` (optional): Number of instances (default: 1)
 - `customName` (optional): Custom name for the instance (max 100 characters)
+- `region` (optional): Region code listed by `list_products` (`EU`, `US-CENTRAL`, `US-EAST`, `US-WEST`, `UK`, `JPN`, `IND`, `AUS`), default `EU`
+- `addOns` (optional, VPS only): Add-on ids listed by `list_products`, at most one per type
+
+Each region and add-on adds its monthly price to the plan.
 
 **Example:**
 
 ```
 Purchase 3 months of product abc123
+Buy 1 month of VPS Starter in US-EAST with the OpenClaw add-on
 ```
 
 ### get_order
