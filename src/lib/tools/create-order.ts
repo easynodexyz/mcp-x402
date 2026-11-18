@@ -3,7 +3,9 @@ import type { Order, X402Client } from '../client.js';
 
 export const createOrderSchema = z.object({
   productId: z.string().describe('Product ID to purchase'),
-  period: z.number().describe('Subscription period in months'),
+  period: z
+    .union([z.literal(1), z.literal(3), z.literal(6)])
+    .describe('Subscription period in months: 1, 3 or 6'),
   quantity: z
     .number()
     .int()

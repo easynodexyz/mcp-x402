@@ -55,7 +55,8 @@ export const TOOLS = [
         },
         period: {
           type: 'number',
-          description: 'Subscription period in months',
+          enum: [1, 3, 6],
+          description: 'Subscription period in months: 1, 3 or 6',
         },
         quantity: {
           type: 'number',

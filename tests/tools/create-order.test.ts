@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { createOrder } from '../../src/lib/tools/create-order.js';
+import { createOrder, createOrderSchema } from '../../src/lib/tools/create-order.js';
 import type { X402Client, Order } from '../../src/lib/client.js';
 
 function makeOrder(overrides: Partial<Order> = {}): Order {
@@ -51,5 +51,15 @@ describe('createOrder tool', () => {
     const result = await createOrder(client, { productId: 'p1', period: 1, quantity: 1 });
 
     expect(result).toContain('get_order');
+  });
+});
+
+describe('createOrderSchema', () => {
+  it.each([1, 3, 6])('accepts period %i', (period) => {
+    expect(createOrderSchema.safeParse({ productId: 'p1', period }).success).toBe(true);
+  });
+
+  it.each([0, 2, 12, 0.25])('rejects period %s', (period) => {
+    expect(createOrderSchema.safeParse({ productId: 'p1', period }).success).toBe(false);
   });
 });
