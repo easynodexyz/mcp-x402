@@ -258,7 +258,7 @@ Purchase a product using USDC on Base. Handles x402 payment automatically.
 **Parameters:**
 
 - `productId` (required): Product ID to purchase
-- `period` (required): Subscription period in months
+- `period` (required): Subscription period in months: `1`, `3` or `6`
 - `quantity` (optional): Number of instances (default: 1)
 - `customName` (optional): Custom name for the instance (max 100 characters)
 
