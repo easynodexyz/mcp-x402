@@ -13,6 +13,8 @@ export interface Product {
   description: string;
   category: 'vps' | 'node';
   pricing: ProductPricing[];
+  regions?: ProductRegion[];
+  addOns?: ProductAddOn[];
   specs?: Record<string, number>;
   supply: number | string;
   maxPerOrder: number;
@@ -23,6 +25,18 @@ export interface ProductPricing {
   period: number;
   totalPeriodCost: number;
   monthlyCostEquivalent: number;
+}
+
+export interface ProductRegion {
+  code: string;
+  monthlyPricing: number;
+}
+
+export interface ProductAddOn {
+  id: string;
+  type: string;
+  name: string;
+  monthlyPricing: number;
 }
 
 export interface OrderInstance {
@@ -87,6 +101,8 @@ export interface CreateOrderParams {
   userId?: string;
   imports?: Record<string, unknown>;
   customName?: string;
+  region?: string;
+  addOns?: string[];
 }
 
 interface PaymentRequirements {

@@ -112,3 +112,28 @@ describe('listProducts formatting', () => {
     );
   });
 });
+
+describe('listProducts regions and add-ons', () => {
+  it('lists regions and add-ons with their extra monthly price', async () => {
+    const product = makeProduct({
+      regions: [
+        { code: 'EU', monthlyPricing: 0 },
+        { code: 'US-EAST', monthlyPricing: 1.5 },
+      ],
+      addOns: [{ id: 'openclaw', type: 'software', name: 'OpenClaw', monthlyPricing: 4 }],
+    });
+    const result = await listProducts(mockClient([product]), {});
+
+    expect(result).toContain('Regions (extra per month):');
+    expect(result).toContain('US-EAST: +$1.50');
+    expect(result).toContain('Add-ons (extra per month):');
+    expect(result).toContain('openclaw (software, OpenClaw): +$4.00');
+  });
+
+  it('omits the sections when the API does not return them', async () => {
+    const result = await listProducts(mockClient([makeProduct()]), {});
+
+    expect(result).not.toContain('Regions');
+    expect(result).not.toContain('Add-ons');
+  });
+});

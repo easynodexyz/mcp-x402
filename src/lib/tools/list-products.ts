@@ -11,7 +11,7 @@ export const listProductsSchema = z.object({
 export type ListProductsParams = z.infer<typeof listProductsSchema>;
 
 export const listProductsDescription =
-  'List available VPS and blockchain node products with USDC pricing. Returns product IDs, names, pricing, and availability.';
+  'List available VPS and blockchain node products with USDC pricing. Returns product IDs, names, pricing, available regions and add-ons (with their extra monthly price), and availability.';
 
 function formatUsd(amount: number): string {
   return `$${amount.toFixed(2)}`;
@@ -19,6 +19,16 @@ function formatUsd(amount: number): string {
 
 function formatPrice(pricing: ProductPricing): string {
   return `${pricing.period} month(s): ${formatUsd(pricing.totalPeriodCost)} total (${formatUsd(pricing.monthlyCostEquivalent)}/month)`;
+}
+
+function formatOptions<T>(
+  title: string,
+  options: T[] | undefined,
+  format: (option: T) => string
+): string[] {
+  return options?.length
+    ? [`  ${title}:`, ...options.map((option) => `    - ${format(option)}`)]
+    : [];
 }
 
 function formatProduct(product: Product): string {
@@ -30,6 +40,17 @@ function formatProduct(product: Product): string {
     `  Type: ${product.category}`,
     `  Pricing (USDC):`,
     ...product.pricing.map((pricing) => `    - ${formatPrice(pricing)}`),
+    ...formatOptions(
+      'Regions (extra per month)',
+      product.regions,
+      ({ code, monthlyPricing }) => `${code}: +${formatUsd(monthlyPricing)}`
+    ),
+    ...formatOptions(
+      'Add-ons (extra per month)',
+      product.addOns,
+      ({ id, type, name, monthlyPricing }) =>
+        `${id} (${type}, ${name}): +${formatUsd(monthlyPricing)}`
+    ),
     `  Remaining Supply: ${product.supply}`,
   ];
 

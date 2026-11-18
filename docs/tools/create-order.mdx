@@ -13,6 +13,10 @@ Purchase a VPS or blockchain node product using USDC on Base. Handles the x402 p
 | `period` | `1 \| 3 \| 6` | Yes | Subscription period in months |
 | `quantity` | `number` | No | Number of instances to purchase (default: 1) |
 | `customName` | `string` | No | Custom name for the instance (max 100 characters) |
+| `region` | `string` | No | Region code from `list_products` (`EU`, `US-CENTRAL`, `US-EAST`, `US-WEST`, `UK`, `JPN`, `IND`, `AUS`), default `EU` |
+| `addOns` | `string[]` | No | VPS only: add-on ids from `list_products`, at most one per type |
+
+Each region and add-on adds its monthly price to the plan. A region or add-on the product does not offer is refused by the API.
 
 ## Example Usage
 
@@ -22,6 +26,10 @@ Purchase 3 months of product abc123
 
 ```
 Buy 1 month of VPS-XS with the name "my-server"
+```
+
+```
+Buy 1 month of VPS Starter in US-EAST with the OpenClaw add-on
 ```
 
 ## Example Response

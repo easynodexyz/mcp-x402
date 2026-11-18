@@ -45,7 +45,7 @@ export const TOOLS = [
   {
     name: 'create_order',
     description:
-      'Purchase a VPS or blockchain node product using USDC on Base. Handles the x402 payment flow automatically. Returns order details with ID and status.',
+      'Purchase a VPS or blockchain node product using USDC on Base, optionally in a given region and with add-ons from list_products. Handles the x402 payment flow automatically. Returns order details with ID and status.',
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -65,6 +65,18 @@ export const TOOLS = [
         customName: {
           type: 'string',
           description: 'Custom name for the instance (max 100 characters)',
+        },
+        region: {
+          type: 'string',
+          enum: ['EU', 'US-CENTRAL', 'US-EAST', 'US-WEST', 'UK', 'JPN', 'IND', 'AUS'],
+          description: 'Region code from the product regions in list_products (default: EU)',
+        },
+        addOns: {
+          type: 'array',
+          items: { type: 'string' },
+          maxItems: 10,
+          description:
+            'VPS only: add-on ids from the product addOns in list_products, at most one per type',
         },
       },
       required: ['productId', 'period'],
