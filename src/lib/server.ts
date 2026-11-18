@@ -1,5 +1,5 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { McpServer } from '@modelcontextprotocol/server';
+import { serveStdio } from '@modelcontextprotocol/server/stdio';
 import { X402Client } from './client.js';
 import { loadConfig } from './config.js';
 import {
@@ -191,17 +191,19 @@ function requireClient(client: X402Client | null): X402Client {
   return client;
 }
 
-export function createMcpServer(client: X402Client | null): McpServer {
-  const mcpServer = new McpServer({
-    name: 'easy-node-x402',
-    version: '0.1.0',
-  });
+export interface ServerInfo {
+  name: string;
+  version: string;
+}
+
+export function createMcpServer(client: X402Client | null, serverInfo: ServerInfo): McpServer {
+  const mcpServer = new McpServer(serverInfo);
 
   mcpServer.registerTool(
     'list_products',
     {
       description: listProductsDescription,
-      inputSchema: listProductsSchema.shape,
+      inputSchema: listProductsSchema,
     },
     async (params) => {
       try {
@@ -219,7 +221,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'create_order',
     {
       description: createOrderDescription,
-      inputSchema: createOrderSchema.shape,
+      inputSchema: createOrderSchema,
     },
     async (params) => {
       try {
@@ -237,7 +239,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'get_order',
     {
       description: getOrderDescription,
-      inputSchema: getOrderSchema.shape,
+      inputSchema: getOrderSchema,
     },
     async (params) => {
       try {
@@ -255,7 +257,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'list_instances',
     {
       description: listInstancesDescription,
-      inputSchema: listInstancesSchema.shape,
+      inputSchema: listInstancesSchema,
     },
     async () => {
       try {
@@ -273,7 +275,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'get_instance',
     {
       description: getInstanceDescription,
-      inputSchema: getInstanceSchema.shape,
+      inputSchema: getInstanceSchema,
     },
     async (params) => {
       try {
@@ -291,7 +293,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'renew_instance',
     {
       description: renewInstanceDescription,
-      inputSchema: renewInstanceSchema.shape,
+      inputSchema: renewInstanceSchema,
     },
     async (params) => {
       try {
@@ -309,7 +311,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
     'update_custom_name',
     {
       description: updateCustomNameDescription,
-      inputSchema: updateCustomNameSchema.shape,
+      inputSchema: updateCustomNameSchema,
     },
     async (params) => {
       try {
@@ -326,7 +328,7 @@ export function createMcpServer(client: X402Client | null): McpServer {
   return mcpServer;
 }
 
-export async function runServer(): Promise<void> {
+export async function runServer(serverInfo: ServerInfo): Promise<void> {
   const configResult = loadConfig();
 
   if (!configResult.valid || !configResult.config) {
@@ -337,7 +339,5 @@ export async function runServer(): Promise<void> {
   }
 
   const client = new X402Client(configResult.config);
-  const server = createMcpServer(client);
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
+  serveStdio(() => createMcpServer(client, serverInfo));
 }

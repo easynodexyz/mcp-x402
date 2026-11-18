@@ -14,6 +14,6 @@ export { loadConfig, getConfigPath, getConfigDir } from './lib/config.js';
 export type { X402Config, ConfigValidationResult } from './lib/config.js';
 
 export { createMcpServer, runServer, TOOLS } from './lib/server.js';
-export { runHttpServer } from './lib/http.js';
+export type { ServerInfo } from './lib/server.js';
 
 export * from './lib/tools/index.js';
