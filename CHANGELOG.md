@@ -1,5 +1,11 @@
 # @easynodexyz/mcp-x402
 
+## 0.2.0
+
+### Minor Changes
+
+- fbcda73: `create_order` accepts `region` and `addOns`, and `list_products` shows each product's regions and add-ons with their extra monthly price.
+
 ## 0.1.4
 
 ### Patch Changes
