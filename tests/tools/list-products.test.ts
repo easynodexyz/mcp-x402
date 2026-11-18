@@ -81,3 +81,34 @@ describe('listProducts tool', () => {
     expect(result).toContain('Available VPS Products (1)');
   });
 });
+
+describe('listProducts formatting', () => {
+  it('formats each period with rounded USD amounts', async () => {
+    const product = makeProduct({
+      pricing: [
+        {
+          description: '3 month(s)',
+          period: 3,
+          totalPeriodCost: 26.700000000000003,
+          monthlyCostEquivalent: 8.9,
+        },
+      ],
+    });
+    const result = await listProducts(mockClient([product]), {});
+
+    expect(result).toContain('3 month(s): $26.70 total ($8.90/month)');
+  });
+
+  it('replaces every {br} marker in subtitle and description', async () => {
+    const product = makeProduct({
+      subtitle: '4 vCPU{br}8 GB RAM',
+      description: '4 vCPU Cores - 8 GB RAM{br}Up to 200 GB SSD{br}or 300 GB NVMe',
+    });
+    const result = await listProducts(mockClient([product]), {});
+
+    expect(result).not.toContain('{br}');
+    expect(result).toContain(
+      'Description: 4 vCPU Cores - 8 GB RAM - Up to 200 GB SSD - or 300 GB NVMe'
+    );
+  });
+});

@@ -13,23 +13,20 @@ export type ListProductsParams = z.infer<typeof listProductsSchema>;
 export const listProductsDescription =
   'List available VPS and blockchain node products with USDC pricing. Returns product IDs, names, pricing, and availability.';
 
+function formatUsd(amount: number): string {
+  return `$${amount.toFixed(2)}`;
+}
+
 function formatPrice(pricing: ProductPricing): string {
-  const parts: string[] = [];
-
-  parts.push(`Description: $${pricing.description}`);
-  parts.push(`Period (in month) : $${pricing.period}`);
-  parts.push(`Total period cost: $${pricing.totalPeriodCost}`);
-  parts.push(`Cost for 1 month: $${pricing.monthlyCostEquivalent}`);
-
-  return parts.join(', ') || 'Contact for pricing';
+  return `${pricing.period} month(s): ${formatUsd(pricing.totalPeriodCost)} total (${formatUsd(pricing.monthlyCostEquivalent)}/month)`;
 }
 
 function formatProduct(product: Product): string {
   const lines: string[] = [
     `**${product.title}** (${product.code})`,
     `  ID: ${product.id}`,
-    `  Title: ${product.subtitle}`,
-    `  Description: ${product.description}`,
+    `  Title: ${product.subtitle.replaceAll('{br}', ' - ')}`,
+    `  Description: ${product.description.replaceAll('{br}', ' - ')}`,
     `  Type: ${product.category}`,
     `  Pricing (USDC):`,
     ...product.pricing.map((pricing) => `    - ${formatPrice(pricing)}`),
